@@ -2,7 +2,7 @@
 <htm>
   <head>
     <meta charset="UTF-8" />
-    <title>Produtos - Barbearia Alura</title>
+    <title>Contato - Barbearia Alura</title>
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -20,7 +20,43 @@
       </div>
     </header>
     <main>
-      <p>Teste</p:>
+      <form>
+        <label for="nomesobrenome">Nome e sobrenome</label>
+        <input type="text" id="nomesobrenome" class="input-padrao">
+
+        <label for="email">E-mail</label>
+        <input type="text" id="email" class="input-padrao">
+
+        <label for="telefone">Telefone</label>
+        <input type="text" id="telefone" class="input-padrao">
+
+        <label for="mensagem">Mensagem</label>
+        <textarea cols="70" rows="10" id="mensagem" class="input-padrao"></textarea>
+
+        <div>
+          <p>Como prefere nosso contato</p>
+
+          <label for=radio-email><input type="radio" name="contato" value="email" id="radio-email">Email</label>
+
+          <label for=radio-telefone><input type="radio" name="contato" value="telefone" id="radio-telefone">Telefone</label>
+
+          <label for=radio-whatsapp><input type="radio" name="contato" value="whatsapp" id="radio-whatsapp">Whatsapp</label>
+        </div>
+
+        <div>
+          <p>Qual horário prefere ser atendido?</p>
+          <select id="">
+            <option>Manhã</option>
+            <option>Tarde</option>
+            <option>Noite</option>
+          </select>
+        </div>
+
+        <label class="checkbox"><input type="checkbox">Gostaria de receber nossas novidades por email?</label>
+
+        <input type="submit" value="Enviar formulário">
+
+      </form>
     </main>
     <footer>
       <img src="logo-branco.png">
