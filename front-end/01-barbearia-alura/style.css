@@ -157,3 +157,33 @@ td {
 .banner {
   width: 100%;
 }
+
+.titulo-principal {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 1em;
+  clear: left;
+}
+
+.principal p {
+  margin-bottom: 1em;
+}
+
+.principal strong {
+  font-weight: bold;
+}
+
+.principal em {
+  font-style: italic;
+}
+
+.utensilios {
+  width: 120px;
+  float: left;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.imagembeneficios {
+  width: 60%;
+}
