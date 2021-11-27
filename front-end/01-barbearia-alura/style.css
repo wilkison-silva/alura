@@ -116,3 +116,20 @@ form label, form legend {
 .checkbox {
   margin: 20px 0;
 }
+
+.botao-enviar {
+  border-style: none;
+  font-size: 20px;
+  color: white;
+  background: orange;
+  width: 40%;
+  margin: 20px 0;
+  padding: 20px 0;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: 1s;
+}
+
+.botao-enviar:hover {
+  background:darkorange;
+}
