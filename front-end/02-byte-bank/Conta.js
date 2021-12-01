@@ -1,6 +1,10 @@
 class Conta {
 
   constructor(saldoInicial, agencia, cliente){
+    if(this.constructor == Conta){
+      throw new Error("Você não deve instanciar esta classe diretamente, pois ela é abstrata");
+    }
+
     this._saldo = saldoInicial;
     this._agencia = agencia;
     this._cliente = cliente;
