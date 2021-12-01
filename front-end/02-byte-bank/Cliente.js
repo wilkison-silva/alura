@@ -10,6 +10,12 @@ class Cliente {
     return this._cpf;
   }
 
+  autenticar(senha){
+    return senha == this._senha;
+  }
+
+
+
 }
 
 export default Cliente;
