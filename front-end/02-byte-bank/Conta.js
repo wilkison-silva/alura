@@ -27,7 +27,7 @@ class Conta {
 
   //método abstrato
   sacar(valor){
-
+    throw new Error("O método sacar(valor) da classe Conta é abstrato");
   }
 
   _sacar(valor, taxa){
