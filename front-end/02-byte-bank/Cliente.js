@@ -9,10 +9,6 @@ class Cliente {
     return this._cpf;
   }
 
-  set cpf(cpf){
-    this._cpf = cpf;
-  }
-
 }
 
 export default Cliente;

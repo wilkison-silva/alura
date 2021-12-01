@@ -9,11 +9,7 @@ class ContaCorrente extends Conta {
 
   sacar(valor){
     let taxa = 1.1;
-    const valorASacar = taxa * valor;
-    if(this._saldo >= valorASacar){
-      this._saldo -= valorASacar;
-      return this._saldo;
-    }
+    return super._sacar(valor, taxa);
   }
 
 }

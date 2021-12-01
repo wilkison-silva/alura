@@ -21,10 +21,17 @@ class Conta {
   }
 
   sacar(valor){
-    if(this._saldo >= valor){
-      this._saldo -= valor;
+    let taxa = 1;
+    return this._sacar(valor, taxa);
+  }
+
+  _sacar(valor, taxa){
+    const valorASacar = taxa * valor;
+    if(this._saldo >= valorASacar){
+      this._saldo -= valorASacar;
       return this._saldo;
     }
+    return 0;
   }
 
   depositar(valor){
