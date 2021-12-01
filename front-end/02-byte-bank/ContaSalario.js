@@ -1,16 +1,16 @@
 import Conta from "./Conta.js"
 
-class ContaPoupanca extends Conta{
+class ContaSalario extends Conta{
 
   static numeroDeContas = 0;
 
-  constructor(saldoInicial, agencia, cliente){
-    super(saldoInicial, agencia, cliente);
+  constructor(agencia, cliente){
+    super(0, agencia, cliente);
     ContaPoupanca.numeroDeContas += 1;
   }
 
   sacar(valor){
-    const taxa = 1.02;
+    const taxa = 1.01;
     return super._sacar(valor, taxa);
   }
 
