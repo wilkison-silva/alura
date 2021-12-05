@@ -1,7 +1,7 @@
 import BotaoConcluirTarefa from './BotaoConcluirTarefa.js';
 import BotaoDeletarTarefa from './BotaoDeletarTarefa.js';
 
-const ItemLista = (textoTarefa, dataTarefa) => {
+const ItemLista = ({textoTarefa, dataTarefa}) => {
   const novoItemLista = document.createElement('li');
   novoItemLista.classList.add('task');
   novoItemLista.innerHTML = `<p class='content'>${dataTarefa} * ${textoTarefa}</p>`;
