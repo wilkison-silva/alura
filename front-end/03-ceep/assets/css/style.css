@@ -121,7 +121,7 @@ body {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5rem;
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
 }
 
 .check-button, .delete-button {
@@ -131,6 +131,7 @@ body {
   outline: none;
   border-radius: 2px;
   cursor: pointer;
+  margin: 0 10px;
 }
 
 .task.done .check-button {
@@ -153,6 +154,7 @@ body {
 
 .content {
   margin: 0;
+  flex: 2;
 }
 
 .task.done .content {
