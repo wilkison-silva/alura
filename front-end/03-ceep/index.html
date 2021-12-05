@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./assets/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BioRhyme&amp;family=Space+Mono&amp;display=swap">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=BioRhyme&amp;family=Space+Mono&amp;display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <title>Ceep</title>
 </head>
+
 <body>
   <div class="app">
     <div class="todo-list">
@@ -17,14 +20,16 @@
 
       <form class="form" action="">
         <input class="form-input" type="text" id="input-descricao-tarefa">
-        <input id ="input-data-tarefa" type="datetime-local">
+        <input id="input-data-tarefa" type="datetime-local">
         <button class="form-button" id="botao-novo-item"> Novo Item </button>
       </form>
 
       <ul class="list" id="lista-de-tarefas">
 
       </ul>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
       <script type="module" src="listaDeTarefas.js"></script>
     </div>
 </body>
+
 </html>
