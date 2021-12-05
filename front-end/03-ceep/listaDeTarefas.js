@@ -19,6 +19,7 @@ const criarNovaTarefa = (evento) => {
   novoItemLista.appendChild(BotaoDeletarTarefa());
   lista.appendChild(novoItemLista);
 
+
   inputDescricaoTarefa.value = "";
 };
 
