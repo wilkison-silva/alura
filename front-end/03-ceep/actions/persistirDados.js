@@ -20,3 +20,15 @@ const organizarTarefasPorData = (dados) => {
   });
   return dados;
 }
+
+export const deletarItem = (index) => {
+  const itemsListaAtualizados = buscarItems();
+  itemsListaAtualizados.splice(index, 1);
+  localStorage.setItem('itemsLista',JSON.stringify(itemsListaAtualizados));
+}
+
+export const atualizarEstadoTarefa = (index) => {
+  const itemsListaAtualizados = buscarItems();
+  itemsListaAtualizados[index].estadoTarefaConcluida = !itemsListaAtualizados[index].estadoTarefaConcluida;
+  localStorage.setItem('itemsLista',JSON.stringify(itemsListaAtualizados));
+}

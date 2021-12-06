@@ -15,7 +15,8 @@ const criarNovaTarefa = (evento) => {
   if (textoTarefa) {
     inputDescricaoTarefa.value = "";
     const lista = document.querySelector("#lista-de-tarefas");
-    const dados = { textoTarefa, dataTarefa };
+    const estadoTarefaConcluida = false;
+    const dados = { textoTarefa, dataTarefa, estadoTarefaConcluida };
     lista.appendChild(ItemLista(dados));
     salvarItem(dados);
     carregarListaDeTarefas();

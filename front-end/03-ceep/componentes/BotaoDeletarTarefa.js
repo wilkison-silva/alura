@@ -1,3 +1,4 @@
+import {carregarListaDeTarefas} from '../actions/carregarListaDeTarefas.js';
 const BotaoDeletarTarefa = () => {
   const botaoDeletarTarefa = document.createElement('button');
   botaoDeletarTarefa.classList.add('delete-button')
@@ -5,6 +6,7 @@ const BotaoDeletarTarefa = () => {
   botaoDeletarTarefa.addEventListener('click', (evento) => {
     const itemDaListaParaExcluir = evento.target.parentNode;
     itemDaListaParaExcluir.remove();
+    carregarListaDeTarefas();
   });
 
   return botaoDeletarTarefa;

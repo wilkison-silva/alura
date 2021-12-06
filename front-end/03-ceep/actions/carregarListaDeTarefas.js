@@ -8,11 +8,11 @@ export const carregarListaDeTarefas = () => {
   const lista = document.querySelector('#lista-de-tarefas');
   lista.innerHTML = "";
   const datasCarregadas = [];
-  itemSalvos.forEach(item => {
+  itemSalvos.forEach((item, index) => {
     if(datasCarregadas.indexOf(item.dataTarefa) === -1) {
       lista.appendChild(ItemData(item.dataTarefa));
       datasCarregadas.push(item.dataTarefa);
     }
-    lista.appendChild(ItemLista(item));
+    lista.appendChild(ItemLista(item, index));
   });
 }
