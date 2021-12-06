@@ -1,16 +1,22 @@
 export const buscarItems = () => {
   const itemsSalvos = JSON.parse(localStorage.getItem('itemsLista')) || [];
-  itemsSalvos.sort((a, b) => {
-    const primeiraData = moment(a.dataTarefa,'DD/MM/YYYY').format('YYYYMMDD');
-    const segundaData = moment(b.dataTarefa,'DD/MM/YYYY').format('YYYYMMDD');
+  const ItemsOrdenadosPorData = organizarTarefasPorData(itemsSalvos);
 
-    return primeiraData-segundaData;
-  });
-  return itemsSalvos;
+  return ItemsOrdenadosPorData;
 }
 
 export const salvarItem = (dados) => {
   const itemsListaAtualizados = buscarItems();
   itemsListaAtualizados.push(dados);
   localStorage.setItem('itemsLista',JSON.stringify(itemsListaAtualizados));
+}
+
+const organizarTarefasPorData = (dados) => {
+  dados.sort((a, b) => {
+    const primeiraData = moment(a.dataTarefa,'DD/MM/YYYY').format('YYYYMMDD');
+    const segundaData = moment(b.dataTarefa,'DD/MM/YYYY').format('YYYYMMDD');
+
+    return primeiraData-segundaData;
+  });
+  return dados;
 }

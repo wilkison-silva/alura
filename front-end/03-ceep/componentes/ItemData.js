@@ -1,8 +1,8 @@
 
 const ItemData = (dataTarefa) => {
   const novoItemData = document.createElement('li');
-  novoItemData.classList.add('task');
-  novoItemData.innerHTML = `<p class='content'>${dataTarefa}</p>`;
+  // novoItemData.classList.add('content');
+  novoItemData.innerHTML = `<p class='content-data'>${dataTarefa}</p>`;
 
   return novoItemData;
 
