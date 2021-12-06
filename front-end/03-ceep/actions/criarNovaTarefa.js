@@ -1,5 +1,6 @@
 import ItemLista from "../componentes/ItemLista.js";
 import { salvarItem } from "./persistirDados.js";
+import {carregarListaDeTarefas} from './carregarListaDeTarefas.js';
 
 const criarNovaTarefa = (evento) => {
   evento.preventDefault();
@@ -15,9 +16,9 @@ const criarNovaTarefa = (evento) => {
     inputDescricaoTarefa.value = "";
     const lista = document.querySelector("#lista-de-tarefas");
     const dados = { textoTarefa, dataTarefa };
-
     lista.appendChild(ItemLista(dados));
     salvarItem(dados);
+    carregarListaDeTarefas();
   }
 };
 
