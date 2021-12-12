@@ -5,15 +5,6 @@ const listaClientesCadastrados = document.querySelector(
   '#tbody-clientes-cadastrados',
 );
 
-// getListaClientesCadastrados()
-//   .then(clientesCadastrados => {
-//     clientesCadastrados.forEach(cliente => {
-//       console.log(cliente);
-//       listaClientesCadastrados
-//         .appendChild(ItemListaClientesCadastrados(cliente.nome, cliente.email));
-//     });
-//   });
-
 const lista = await getListaClientesCadastrados();
 lista.forEach((cliente) => {
   listaClientesCadastrados.appendChild(
@@ -29,3 +20,12 @@ lista.forEach((cliente) => {
 //       .appendChild(ItemListaClientesCadastrados(cliente.nome, cliente.email));
 //   });
 // }
+
+// getListaClientesCadastrados()
+//   .then(clientesCadastrados => {
+//     clientesCadastrados.forEach(cliente => {
+//       console.log(cliente);
+//       listaClientesCadastrados
+//         .appendChild(ItemListaClientesCadastrados(cliente.nome, cliente.email));
+//     });
+//   });

@@ -8,5 +8,7 @@ export default (nome, email) => {
                             <li><button class="botao-simples botao-simples--excluir" type="button">Excluir</button></li>
                           </ul>
                         </td>`;
+
+
   return novaLinha;
 };

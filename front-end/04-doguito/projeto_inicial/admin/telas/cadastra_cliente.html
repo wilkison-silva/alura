@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doguito Petshop | Cadastro de cliente</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/base/base.css">
     <link rel="stylesheet" href="../assets/css/componentes/cabecalho.css">
     <link rel="stylesheet" href="../assets/css/componentes/cartao.css">
@@ -28,7 +28,7 @@
     <main class="container flex flex--centro flex--coluna">
         <section class="cartao cadastro">
             <h1 class="cartao__titulo">Novo Cliente</h1>
-            <form class="flex flex--coluna" data-form>
+            <form class="flex flex--coluna" data-form id="formulario-cadastro-cliente">
                 <div class="input-container">
                     <input name="nome" id="nome" class="input" type="text" placeholder="Nome" required data-nome>
                     <label class="input-label" for="nome">Nome</label>
@@ -39,13 +39,13 @@
                     <label class="input-label" for="email" >email</label>
                     <span class="input-mensagem-erro">Esse campo não pode estar vazio</span>
                 </div>
-                <button type="submit"class="botao">
+                <button type="submit"class="botao" id="botao-cadastrar-cliente">
                 Cadastrar
             </button>
             </form>
         </section>
     </main>
 </body>
-
+<script type="module" src="../scripts/controller/cadastrar-cliente.js"></script>
 
 </html>
