@@ -1,4 +1,4 @@
-export default (nome, email) => {
+export default (nome, email, id) => {
   const novaLinha = document.createElement("tr");
   novaLinha.innerHTML = `<td class="td" data-td>${nome}</td>
                         <td>${email}</td>
@@ -9,6 +9,6 @@ export default (nome, email) => {
                           </ul>
                         </td>`;
 
-
+  novaLinha.dataset.id = id;
   return novaLinha;
 };
