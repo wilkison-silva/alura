@@ -13,14 +13,19 @@ export const cadastrarCliente = (nome, email) =>{
   return fetch('http://localhost:3000/profile', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      nome: nome,
-      email: email
-    })
+    body: JSON.stringify({ nome, email }),
   });
 };
 
-export const getClienteCadastrado = (id) => {
-  return fetch(`http://localhost:3000/profile/${id}`)
-  .then((response) => response.json())
+export const getClienteCadastrado = async (id) => {
+  const response = await fetch(`http://localhost:3000/profile/${id}`);
+  return await response.json();
+}
+
+export const atualizarCliente = async (id, nome, email) => {
+  fetch(`http://localhost:3000/profile/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nome, email }),
+  });
 }
