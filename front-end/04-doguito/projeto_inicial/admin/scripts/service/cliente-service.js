@@ -17,7 +17,10 @@ export const cadastrarCliente = (nome, email) =>{
       nome: nome,
       email: email
     })
-  })
-  //.then((response) => response.body);
-
+  });
 };
+
+export const getClienteCadastrado = (id) => {
+  return fetch(`http://localhost:3000/profile/${id}`)
+  .then((response) => response.json())
+}
