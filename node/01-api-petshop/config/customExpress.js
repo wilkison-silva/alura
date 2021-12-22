@@ -1,6 +1,5 @@
 const express = require('express');
 const consign = require('consign');
-const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 
 module.exports = () => {
