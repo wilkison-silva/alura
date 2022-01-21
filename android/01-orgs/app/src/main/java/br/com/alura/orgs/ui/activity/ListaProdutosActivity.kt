@@ -3,12 +3,9 @@ package br.com.alura.orgs.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import br.com.alura.orgs.R
 import br.com.alura.orgs.dao.ProdutosDao
 import br.com.alura.orgs.databinding.ActivityListaProdutosActivityBinding
 import br.com.alura.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListaProdutosActivity : AppCompatActivity() {
 
@@ -33,7 +30,6 @@ class ListaProdutosActivity : AppCompatActivity() {
     }
 
     private fun configuraFab() {
-        //val fab = findViewById<FloatingActionButton>(R.id.activity_lista_produtos_fab)
         val fab = binding.activityListaProdutosFab
         fab.setOnClickListener {
             vaiParaFormularioProduto()
@@ -47,7 +43,6 @@ class ListaProdutosActivity : AppCompatActivity() {
     }
 
     private fun configuraRecyclerView() {
-        //val recyclerView = findViewById<RecyclerView>(R.id.activity_lista_produtos_recyclerView)
         val recyclerView = binding.activityListaProdutosRecyclerView
         recyclerView.adapter = adapter
     }
