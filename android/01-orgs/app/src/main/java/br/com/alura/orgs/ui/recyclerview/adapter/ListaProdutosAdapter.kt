@@ -33,12 +33,11 @@ class ListaProdutosAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        val binding = ProdutoItemBinding
-            .inflate(
-                LayoutInflater.from(context),
-                parent,
-                false
-            )
+        val binding = ProdutoItemBinding.inflate(
+            LayoutInflater.from(context),
+            parent,
+            false
+        )
         return ViewHolder(binding)
     }
 
