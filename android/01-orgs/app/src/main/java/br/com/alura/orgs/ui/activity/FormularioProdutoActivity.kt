@@ -7,11 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import br.com.alura.orgs.R
 import br.com.alura.orgs.dao.ProdutosDao
 import br.com.alura.orgs.databinding.ActivityFormularioProdutoBinding
+import br.com.alura.orgs.databinding.FormularioImagemBinding
 import br.com.alura.orgs.model.Produto
+import coil.load
 import java.math.BigDecimal
 
 class FormularioProdutoActivity :
     AppCompatActivity() {
+
+    private var urlImagem: String? = null
 
     private val binding by lazy {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
@@ -21,17 +25,28 @@ class FormularioProdutoActivity :
         super.onCreate(savedInstanceState)
         configuraBotaoSalvar()
         setContentView(binding.root)
+
+        val formularioImagemBinding = FormularioImagemBinding.inflate(layoutInflater)
+
+        formularioImagemBinding.formularioImagemBotaoCarregar.setOnClickListener {
+            val imagemURL: String = formularioImagemBinding.formularioImagemUrl.text.toString()
+            formularioImagemBinding.formularioImagemImageview.load(imagemURL)
+        }
+
         binding.activityFormularioProdutoImagem.setOnClickListener {
             AlertDialog.Builder(this)
-                .setView(R.layout.formulario_imagem)
+                .setView(formularioImagemBinding.root)
                 .setPositiveButton("Confirmar") { _, _ ->
-
+                    urlImagem = formularioImagemBinding.formularioImagemUrl.text.toString()
+                    binding.activityFormularioProdutoImagem.load(urlImagem)
                 }
                 .setNegativeButton("Cancelar") { _, _ ->
 
                 }
                 .show()
         }
+
+
     }
 
     private fun configuraBotaoSalvar() {
@@ -60,7 +75,8 @@ class FormularioProdutoActivity :
         return Produto(
             nome = nome,
             descricao = descricao,
-            valor = valor
+            valor = valor,
+            urlImagem = urlImagem
         )
     }
 
