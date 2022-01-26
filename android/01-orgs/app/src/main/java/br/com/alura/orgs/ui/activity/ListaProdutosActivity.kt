@@ -1,7 +1,9 @@
 package br.com.alura.orgs.ui.activity
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import br.com.alura.orgs.dao.ProdutosDao
 import br.com.alura.orgs.databinding.ActivityListaProdutosActivityBinding
@@ -18,10 +20,19 @@ class ListaProdutosActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(binding.root)
         configuraRecyclerView()
         configuraFab()
-        setContentView(binding.root)
+        AlertDialog.Builder(this)
+            .setTitle("titulo de texto")
+            .setMessage("mensagem de texto")
+            .setPositiveButton("Confirmar") { _, _ ->
+
+            }
+            .setNegativeButton("Cancelar") { _, _ ->
+
+            }
+            .show()
     }
 
     override fun onResume() {
