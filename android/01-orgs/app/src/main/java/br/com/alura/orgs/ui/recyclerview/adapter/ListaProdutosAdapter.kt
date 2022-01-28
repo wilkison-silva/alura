@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.orgs.R
 import br.com.alura.orgs.databinding.ProdutoItemBinding
+import br.com.alura.orgs.extensions.tentaCarregarImagem
 import br.com.alura.orgs.model.Produto
 import coil.load
 import java.math.BigDecimal
@@ -15,8 +16,8 @@ import java.text.NumberFormat
 import java.util.*
 
 class ListaProdutosAdapter(
-        private val context: Context,
-        produtos: List<Produto>
+    private val context: Context,
+    produtos: List<Produto>
 ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
 
     private val produtos = produtos.toMutableList()
@@ -33,7 +34,14 @@ class ListaProdutosAdapter(
             descricao.text = produto.descricao
             val valorEmMoedaBrasileira: String = formatarEmMoedaBrasileira(produto.valor)
             valor.text = valorEmMoedaBrasileira
-            imagem.load(produto.urlImagem)
+
+//            imagem.visibility = if (produto.urlImagem != null) {
+//                View.VISIBLE
+//            } else {
+//                View.GONE
+//            }
+
+            imagem.tentaCarregarImagem(produto.urlImagem)
 
         }
 
