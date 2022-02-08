@@ -2,15 +2,17 @@ package br.com.alura.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import br.com.alura.orgs.dao.ProdutosDao
 import br.com.alura.orgs.databinding.ActivityListaProdutosActivityBinding
+import br.com.alura.orgs.model.Produto
 import br.com.alura.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
 
 class ListaProdutosActivity : AppCompatActivity() {
 
     private val dao = ProdutosDao()
-    private val adapter = ListaProdutosAdapter(context = this, produtos = dao.buscaTodos())
+    private lateinit var adapter: ListaProdutosAdapter
 
     private val binding by lazy {
         ActivityListaProdutosActivityBinding.inflate(layoutInflater);
@@ -43,7 +45,14 @@ class ListaProdutosActivity : AppCompatActivity() {
 
     private fun configuraRecyclerView() {
         val recyclerView = binding.activityListaProdutosRecyclerView
+        adapter = ListaProdutosAdapter(
+            context = this,
+            produtos = dao.buscaTodos()
+        ) { produto ->
+            Log.i("ListaProdutosActivity", "produto recebido na activity: ${produto}")
+        }
         recyclerView.adapter = adapter
+
     }
 
 }
