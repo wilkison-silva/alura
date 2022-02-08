@@ -50,6 +50,7 @@ class ListaProdutosActivity : AppCompatActivity() {
             produtos = dao.buscaTodos()
         ) { produto ->
             Log.i("ListaProdutosActivity", "produto recebido na activity: ${produto}")
+
         }
         recyclerView.adapter = adapter
 
