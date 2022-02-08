@@ -50,6 +50,10 @@ class ListaProdutosActivity : AppCompatActivity() {
             produtos = dao.buscaTodos()
         ) { produto ->
             Log.i("ListaProdutosActivity", "produto recebido na activity: ${produto}")
+            val intent = Intent(this, EditarActivity::class.java).apply {
+                putExtra("produto", produto)
+            }
+            startActivity(intent)
 
         }
         recyclerView.adapter = adapter

@@ -64,6 +64,7 @@
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/montserrat"
             android:textColor="#9E9C9C"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activity_editar_nome"
