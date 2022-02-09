@@ -35,12 +35,7 @@ class ListaProdutosAdapter(
 
         init {
             itemView.setOnClickListener{
-                Log.i("ListaProdutosAdapter", "clicando no item")
-                if(::produto.isInitialized) {
-                    Log.i("ListaProdutosAdapter", "produto clicado = ${produto}")
-                    onClickItemListener(produto, itemView)
-
-                }
+                if(::produto.isInitialized) onClickItemListener(produto, itemView)
             }
         }
 

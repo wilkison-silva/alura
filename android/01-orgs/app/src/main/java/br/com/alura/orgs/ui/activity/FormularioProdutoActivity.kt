@@ -50,6 +50,7 @@ class FormularioProdutoActivity :
                 activityFormularioProdutoDescricao.setText(produtoRecebido.descricao)
                 activityFormularioProdutoValor.setText(produtoRecebido.valor.toPlainString())
                 idProduto = produtoRecebido.id
+                urlImagem = produtoRecebido.urlImagem
             }
         }
     }
@@ -60,7 +61,12 @@ class FormularioProdutoActivity :
         val produtoDao = db.produtoDao()
         botaoSalvar.setOnClickListener {
             val produtoNovo = criaProduto()
-            produtoDao.salva(produtoNovo)
+            if(idProduto == 0L){
+                produtoDao.salva(produtoNovo)
+            }
+            else {
+                produtoDao.altera(produtoNovo)
+            }
             finish()
         }
     }
@@ -82,7 +88,8 @@ class FormularioProdutoActivity :
             nome = nome,
             descricao = descricao,
             valor = valor,
-            urlImagem = urlImagem
+            urlImagem = urlImagem,
+            id =  idProduto
         )
     }
 
