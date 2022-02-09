@@ -57,7 +57,6 @@ class ListaProdutosActivity : AppCompatActivity() {
             context = this,
             produtos = dao.buscaTodos()
         ) { produto, _ ->
-            Log.i("ListaProdutosActivity", "produto recebido na activity: ${produto}")
             val intent = Intent(this, EditarActivity::class.java).apply {
                 putExtra("produto", produto)
             }

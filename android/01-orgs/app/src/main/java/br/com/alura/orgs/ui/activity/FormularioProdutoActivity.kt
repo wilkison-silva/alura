@@ -1,6 +1,8 @@
 package br.com.alura.orgs.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +21,7 @@ class FormularioProdutoActivity :
     AppCompatActivity() {
 
     private var urlImagem: String? = null
+    private var idProduto = 0L
 
     private val binding by lazy {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
@@ -39,7 +42,16 @@ class FormularioProdutoActivity :
                 }
         }
 
-
+        intent.getParcelableExtra<Produto>("produto")?.let { produtoRecebido ->
+            title = "Alterar produto"
+            with(binding) {
+                activityFormularioProdutoImagem.tentaCarregarImagem(produtoRecebido.urlImagem)
+                activityFormularioProdutoNome.setText(produtoRecebido.nome)
+                activityFormularioProdutoDescricao.setText(produtoRecebido.descricao)
+                activityFormularioProdutoValor.setText(produtoRecebido.valor.toPlainString())
+                idProduto = produtoRecebido.id
+            }
+        }
     }
 
     private fun configuraBotaoSalvar() {

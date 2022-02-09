@@ -60,7 +60,6 @@ class EditarActivity : AppCompatActivity() {
     private fun formatarEmMoedaBrasileira(valor: BigDecimal): String {
         val formatador: NumberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
         return formatador.format(valor)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -74,7 +73,10 @@ class EditarActivity : AppCompatActivity() {
             val produtoDao = db.produtoDao()
             when (item.itemId) {
                 R.id.activity_editar_menu_alterar -> {
-
+                    Intent(this, FormularioProdutoActivity::class.java).apply {
+                        putExtra("produto", produto)
+                        startActivity(this)
+                    }
                 }
                 R.id.activity_editar_menu_deletar -> {
                     produtoDao.remove(produto)
