@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import br.com.alura.orgs.R
+import br.com.alura.orgs.database.AppDatabase
 import br.com.alura.orgs.databinding.ActivityEditarBinding
 import br.com.alura.orgs.databinding.ActivityListaProdutosActivityBinding
 import br.com.alura.orgs.extensions.tentaCarregarImagem
@@ -20,6 +21,8 @@ import java.util.*
 
 class EditarActivity : AppCompatActivity() {
 
+    private lateinit var produto: Produto
+
     private val binding by lazy {
         ActivityEditarBinding.inflate(layoutInflater);
     }
@@ -28,9 +31,13 @@ class EditarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        tentaCarregarProduto()
+    }
+
+    private fun tentaCarregarProduto(){
         val intent: Intent = intent
         if (intent.hasExtra("produto")) {
-            val produto: Produto? = intent.getParcelableExtra<Produto>("produto")
+            produto = intent.getParcelableExtra<Produto>("produto") as Produto
             if (produto != null) configuraCampos(produto)
         } else {
             finish()
@@ -62,12 +69,17 @@ class EditarActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.activity_editar_menu_alterar -> {
+        if(::produto.isInitialized){
+            val db = AppDatabase.getInstance(this)
+            val produtoDao = db.produtoDao()
+            when (item.itemId) {
+                R.id.activity_editar_menu_alterar -> {
 
-            }
-            R.id.activity_editar_menu_deletar -> {
-                
+                }
+                R.id.activity_editar_menu_deletar -> {
+                    produtoDao.remove(produto)
+                    finish()
+                }
             }
         }
         return super.onOptionsItemSelected(item)

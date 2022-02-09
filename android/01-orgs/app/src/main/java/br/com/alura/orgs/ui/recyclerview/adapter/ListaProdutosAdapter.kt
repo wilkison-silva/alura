@@ -3,6 +3,7 @@ package br.com.alura.orgs.ui.recyclerview.adapter
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.orgs.databinding.ProdutoItemBinding
@@ -15,7 +16,7 @@ import java.util.*
 class ListaProdutosAdapter(
     private val context: Context,
     produtos: List<Produto>,
-    var onClickItemListener: (produto: Produto) -> Unit
+    var onClickItemListener: (produto: Produto, view: View) -> Unit
 
 ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
 
@@ -37,7 +38,7 @@ class ListaProdutosAdapter(
                 Log.i("ListaProdutosAdapter", "clicando no item")
                 if(::produto.isInitialized) {
                     Log.i("ListaProdutosAdapter", "produto clicado = ${produto}")
-                    onClickItemListener(produto)
+                    onClickItemListener(produto, itemView)
 
                 }
             }
