@@ -30,19 +30,28 @@ class EditarActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+    }
 
+    override fun onResume() {
         tentaCarregarProduto()
+        super.onResume()
     }
 
     private fun tentaCarregarProduto(){
-        val intent: Intent = intent
-        if (intent.hasExtra("produto")) {
-            produto = intent.getParcelableExtra<Produto>("produto") as Produto
-            if (produto != null) configuraCampos(produto)
-        } else {
-            finish()
-        }
-    }
+//        val intent: Intent = intent
+//        if (intent.hasExtra("produto")) {
+//            produto = intent.getParcelableExtra<Produto>("produto") as Produto
+//            if (produto != null) configuraCampos(produto)
+//        } else {
+//            finish()
+//        }
+        val db = AppDatabase.getInstance(this)
+        val produtoDao = db.produtoDao()
+        intent.getParcelableExtra<Produto>("produto")?.let { produtoRecebido ->
+            produto = produtoRecebido
+            produtoDao.buscaPorId(produto.id)?.let { configuraCampos(it) }
+        } ?: finish()
+     }
 
     private fun configuraCampos(produto: Produto) {
         val imagem: ImageView = binding.activityEditarImagem
