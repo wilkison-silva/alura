@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import br.com.alura.orgs.R
@@ -27,11 +29,10 @@ class EditarActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val intent: Intent = intent
-        if(intent.hasExtra("produto")){
+        if (intent.hasExtra("produto")) {
             val produto: Produto? = intent.getParcelableExtra<Produto>("produto")
-            if(produto != null) configuraCampos(produto)
-        }
-        else {
+            if (produto != null) configuraCampos(produto)
+        } else {
             finish()
         }
     }
@@ -54,4 +55,22 @@ class EditarActivity : AppCompatActivity() {
         return formatador.format(valor)
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.activity_editar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.activity_editar_menu_alterar -> {
+
+            }
+            R.id.activity_editar_menu_deletar -> {
+                
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }

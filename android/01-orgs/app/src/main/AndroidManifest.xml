@@ -13,8 +13,7 @@
         android:theme="@style/Theme.Orgs">
         <activity
             android:name=".ui.activity.EditarActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:exported="false" />
         <activity android:name=".ui.activity.FormularioProdutoActivity" />
         <activity
             android:name=".ui.activity.ListaProdutosActivity"
