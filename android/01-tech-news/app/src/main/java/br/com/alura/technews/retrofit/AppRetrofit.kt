@@ -6,7 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val BASE_URL = "http://seu_ip:porta_da_api/"
+private const val BASE_URL = "http://192.168.0.38:8080/"
 
 class AppRetrofit {
 

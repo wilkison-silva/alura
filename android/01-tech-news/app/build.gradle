@@ -50,4 +50,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.13.1'
+
+    def lifecycle_version = "2.0.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+//    def lifecycle_version = "2.5.0-alpha02"
+//    def arch_version = "2.1.0"
+//
+//    // ViewModel
+//    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 }
