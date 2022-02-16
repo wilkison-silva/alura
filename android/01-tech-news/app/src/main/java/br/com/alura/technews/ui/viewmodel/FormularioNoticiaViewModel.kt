@@ -10,7 +10,17 @@ class FormularioNoticiaViewModel(
     private val repository: NoticiaRepository
 ) : ViewModel() {
 
-    fun salva(noticia: Noticia) : LiveData<Resource<Void?>> {
-       return repository.salva(noticia)
+    fun salva(noticia: Noticia): LiveData<Resource<Void?>> {
+//        val falha = { _: String? ->
+//            mostraErro(MENSAGEM_ERRO_SALVAR)
+//        }
+//        val sucesso = { _: Noticia ->
+//            finish()
+//        }
+
+        if (noticia.id > 0) {
+            return repository.edita(noticia)
+        }
+        return repository.salva(noticia)
     }
 }
