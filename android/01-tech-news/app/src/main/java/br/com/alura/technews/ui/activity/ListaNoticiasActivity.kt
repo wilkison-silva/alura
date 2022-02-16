@@ -64,8 +64,13 @@ class ListaNoticiasActivity : AppCompatActivity() {
     }
 
     private fun buscaNoticias() {
-        viewModel.buscaTodos().observe(this, Observer { listaNoticias ->
-            adapter.atualiza(listaNoticias)
+        viewModel.buscaTodos().observe(this, Observer { resource ->
+            resource.dado?.let {
+                adapter.atualiza(it)
+            }
+            resource.erro?.let {
+                mostraErro(it)
+            }
         })
     }
 
