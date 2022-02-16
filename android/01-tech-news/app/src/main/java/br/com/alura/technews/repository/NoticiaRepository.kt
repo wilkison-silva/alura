@@ -63,13 +63,16 @@ class NoticiaRepository(
     }
 
     fun buscaPorId(
-        noticiaId: Long,
-        quandoSucesso: (noticiaEncontrada: Noticia?) -> Unit
-    ) {
+        noticiaId: Long
+    ) : LiveData<Noticia?>{
+        val liveData = MutableLiveData<Noticia?>()
         BaseAsyncTask(quandoExecuta = {
             dao.buscaPorId(noticiaId)
-        }, quandoFinaliza = quandoSucesso)
+        }, quandoFinaliza = { noticiaEncontrada ->
+            liveData.value = noticiaEncontrada
+        })
             .execute()
+        return liveData
     }
 
     private fun buscaNaApi(
