@@ -6,15 +6,11 @@ import br.com.alura.technews.model.Noticia
 import br.com.alura.technews.repository.NoticiaRepository
 import br.com.alura.technews.repository.Resource
 
-
-class ListaNoticiasViewModel(
+class FormularioNoticiaViewModel(
     private val repository: NoticiaRepository
 ) : ViewModel() {
 
-    fun buscaTodos(): LiveData<Resource<List<Noticia>?>> {
-
-        return repository.buscaTodos()
-
+    fun salva(noticia: Noticia) : LiveData<Resource<Void?>> {
+       return repository.salva(noticia)
     }
-
 }
