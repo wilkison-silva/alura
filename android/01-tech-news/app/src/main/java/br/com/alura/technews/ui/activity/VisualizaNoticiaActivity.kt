@@ -32,9 +32,9 @@ class VisualizaNoticiaActivity : AppCompatActivity() {
     }
 
     private val viewModel by lazy {
-        val factory = FormularioNoticiasViewModelFactory(repository)
+        val factory = VisualizaNoticiaViewModelFactory(repository)
         ViewModelProviders.of(this, factory)
-            .get(FormularioNoticiaViewModel::class.java)
+            .get(VisualizaNoticiaViewModel::class.java)
     }
 
     private lateinit var noticia: Noticia
@@ -87,10 +87,10 @@ class VisualizaNoticiaActivity : AppCompatActivity() {
 
     private fun remove() {
         if (::noticia.isInitialized) {
-            repository.remove(noticia, quandoSucesso = {
-                finish()
-            }, quandoFalha = {
-                mostraErro(MENSAGEM_FALHA_REMOCAO)
+            viewModel.remove(noticia).observe(this, Observer { resource ->
+                resource.erro?.let { _ ->
+                    mostraErro(MENSAGEM_FALHA_REMOCAO)
+                } ?: finish()
             })
         }
     }
