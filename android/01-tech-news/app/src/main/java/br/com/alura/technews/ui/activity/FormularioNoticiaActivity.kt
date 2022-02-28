@@ -14,6 +14,7 @@ import br.com.alura.technews.ui.activity.extensions.mostraErro
 import br.com.alura.technews.ui.viewmodel.FormularioNoticiaViewModel
 import br.com.alura.technews.ui.viewmodel.factory.FormularioNoticiasViewModelFactory
 import kotlinx.android.synthetic.main.activity_formulario_noticia.*
+import org.koin.android.ext.android.inject
 
 private const val TITULO_APPBAR_EDICAO = "Editando notícia"
 private const val TITULO_APPBAR_CRIACAO = "Criando notícia"
@@ -24,9 +25,8 @@ class FormularioNoticiaActivity : AppCompatActivity() {
     private val noticiaId: Long by lazy {
         intent.getLongExtra(NOTICIA_ID_CHAVE, 0)
     }
-    private val repository by lazy {
-        NoticiaRepository(AppDatabase.getInstance(this).noticiaDAO)
-    }
+
+    private val repository by inject<NoticiaRepository>()
 
     private val viewModel by lazy {
         val factory = FormularioNoticiasViewModelFactory(repository)
