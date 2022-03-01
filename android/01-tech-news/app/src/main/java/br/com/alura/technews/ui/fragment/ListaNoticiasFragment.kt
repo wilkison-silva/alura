@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.alura.technews.R
+import br.com.alura.technews.model.Noticia
 import br.com.alura.technews.ui.activity.extensions.mostraErro
 import br.com.alura.technews.ui.fragment.extesions.mostraErro
 import br.com.alura.technews.ui.recyclerview.adapter.ListaNoticiasAdapter
@@ -20,6 +21,9 @@ import java.lang.IllegalArgumentException
 private const val MENSAGEM_FALHA_CARREGAR_NOTICIAS = "Não foi possível carregar as novas notícias"
 
 class ListaNoticiasFragment : Fragment() {
+
+    var quandoFabSalvaNoticiaClicado: () -> Unit = {}
+    var quandoNoticiaSelecionada: (noticia: Noticia) -> Unit = {}
 
     private val adapter by lazy {
         context?.let { context ->
@@ -54,7 +58,7 @@ class ListaNoticiasFragment : Fragment() {
 
     private fun configuraFabAdicionaNoticia() {
         lista_noticias_fab_salva_noticia.setOnClickListener {
-//            abreFormularioModoCriacao()
+            quandoFabSalvaNoticiaClicado()
         }
     }
 
@@ -66,7 +70,7 @@ class ListaNoticiasFragment : Fragment() {
     }
 
     private fun configuraAdapter() {
-//        adapter.quandoItemClicado = this::abreVisualizadorNoticia
+        adapter.quandoItemClicado = quandoNoticiaSelecionada
     }
 
     private fun buscaNoticias() {
