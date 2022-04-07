@@ -4,17 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import br.com.alura.technews.R
 import br.com.alura.technews.model.Noticia
-import br.com.alura.technews.ui.activity.extensions.mostraErro
 import br.com.alura.technews.ui.fragment.ListaNoticiasFragment
-import br.com.alura.technews.ui.recyclerview.adapter.ListaNoticiasAdapter
-import br.com.alura.technews.ui.viewmodel.ListaNoticiasViewModel
-import kotlinx.android.synthetic.main.activity_lista_noticias.*
-import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val TITULO_APPBAR = "Notícias"
 private const val MENSAGEM_FALHA_CARREGAR_NOTICIAS = "Não foi possível carregar as novas notícias"
@@ -44,9 +36,9 @@ class ListaNoticiasActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun abreVisualizadorNoticia(it: Noticia) {
+    private fun abreVisualizadorNoticia(noticia: Noticia) {
         val intent = Intent(this, VisualizaNoticiaActivity::class.java)
-        intent.putExtra(NOTICIA_ID_CHAVE, it.id)
+        intent.putExtra(NOTICIA_ID_CHAVE, noticia.id)
         startActivity(intent)
     }
 

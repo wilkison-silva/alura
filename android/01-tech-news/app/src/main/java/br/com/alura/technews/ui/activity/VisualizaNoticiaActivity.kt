@@ -65,8 +65,8 @@ class VisualizaNoticiaActivity : AppCompatActivity() {
     }
 
     private fun preencheCampos(noticia: Noticia) {
-        activity_visualiza_noticia_titulo.text = noticia.titulo
-        activity_visualiza_noticia_texto.text = noticia.texto
+        //activity_visualiza_noticia_titulo.text = noticia.titulo
+        //activity_visualiza_noticia_texto.text = noticia.texto
     }
 
     private fun remove() {

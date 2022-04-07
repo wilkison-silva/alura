@@ -17,6 +17,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout="@layout/lista_noticias"/>
 
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
