@@ -28,7 +28,7 @@ class VisualizaNoticiaFragment : Fragment() {
 
     private lateinit var noticia: Noticia
 
-    var quandoAbreFormularioEdicao: () -> Unit = {}
+    var quandoAbreFormularioEdicao: (noticiaSelecionada: Noticia) -> Unit = {}
     var quandoFinalizaTela: () -> Unit = {}
 
     //step 1 - OnCreate is used only for initializations that don't need any view ready to be used
@@ -64,7 +64,9 @@ class VisualizaNoticiaFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.visualiza_noticia_menu_edita -> quandoAbreFormularioEdicao()
+            R.id.visualiza_noticia_menu_edita -> {
+                quandoAbreFormularioEdicao(noticia)
+            }
             R.id.visualiza_noticia_menu_remove -> remove()
         }
         return super.onOptionsItemSelected(item)

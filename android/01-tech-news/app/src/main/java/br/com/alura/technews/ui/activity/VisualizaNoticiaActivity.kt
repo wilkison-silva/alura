@@ -29,31 +29,14 @@ class VisualizaNoticiaActivity : AppCompatActivity() {
         setContentView(R.layout.activity_visualiza_noticia)
         title = TITULO_APPBAR
 
-        val beginTransaction = supportFragmentManager.beginTransaction()
-        val visualizaNoticiaFragment = VisualizaNoticiaFragment()
-        val dados = Bundle()
-        dados.putLong(NOTICIA_ID_CHAVE, noticiaId)
-        visualizaNoticiaFragment.arguments = dados
-        beginTransaction.add(R.id.activity_visualiza_noticia_container, visualizaNoticiaFragment)
-        beginTransaction.commit()
+
     }
 
     override fun onAttachFragment(fragment: Fragment?) {
         super.onAttachFragment(fragment)
-        if(fragment is VisualizaNoticiaFragment){
-            fragment.quandoAbreFormularioEdicao = {
-                abreFormularioEdicao()
-            }
-            fragment.quandoFinalizaTela = {
-                finish()
-            }
-        }
+
     }
 
-    private fun abreFormularioEdicao() {
-        val intent = Intent(this, FormularioNoticiaActivity::class.java)
-        intent.putExtra(NOTICIA_ID_CHAVE, noticiaId)
-        startActivity(intent)
-    }
+
 
 }
