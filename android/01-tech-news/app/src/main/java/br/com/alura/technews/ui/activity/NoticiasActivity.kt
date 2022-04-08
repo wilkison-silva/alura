@@ -11,7 +11,7 @@ import br.com.alura.technews.ui.activity.extensions.transacaoFragment
 import br.com.alura.technews.ui.fragment.ListaNoticiasFragment
 import br.com.alura.technews.ui.fragment.VisualizaNoticiaFragment
 
-private const val TITULO_APPBAR = "Notícias"
+
 private const val MENSAGEM_FALHA_CARREGAR_NOTICIAS = "Não foi possível carregar as novas notícias"
 
 private const val TAG_FRAGMENT_LISTA_NOTICIAS = "lista-noticias"
@@ -21,13 +21,22 @@ class NoticiasActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_noticias)
-        title = TITULO_APPBAR
 
+
+        //verifica se há uma instancia anterior para não perder o estado de qual fragment estava
+        //sendo mostrado.
+        if(savedInstanceState == null){
+            abreListaNoticias()
+        }
+    }
+
+    private fun abreListaNoticias() {
         transacaoFragment {
-            add(
+            replace(
                 R.id.activity_noticias_container,
                 ListaNoticiasFragment(),
-                TAG_FRAGMENT_LISTA_NOTICIAS)
+                TAG_FRAGMENT_LISTA_NOTICIAS
+            )
         }
     }
 
@@ -74,9 +83,6 @@ class NoticiasActivity : AppCompatActivity() {
             addToBackStack(null)
         }
     }
-
-
-
 
     private fun abreFormularioEdicao(noticia: Noticia) {
         val intent = Intent(this, FormularioNoticiaActivity::class.java)

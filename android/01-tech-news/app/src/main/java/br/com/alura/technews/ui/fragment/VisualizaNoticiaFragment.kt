@@ -16,6 +16,7 @@ import java.lang.IllegalArgumentException
 
 private const val NOTICIA_NAO_ENCONTRADA = "Notícia não encontrada"
 private const val MENSAGEM_FALHA_REMOCAO = "Não foi possível remover notícia"
+private const val TITULO_APPBAR = "Notícia"
 
 class VisualizaNoticiaFragment : Fragment() {
 
@@ -53,7 +54,7 @@ class VisualizaNoticiaFragment : Fragment() {
     //do the binding process
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        activity?.title = TITULO_APPBAR
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
