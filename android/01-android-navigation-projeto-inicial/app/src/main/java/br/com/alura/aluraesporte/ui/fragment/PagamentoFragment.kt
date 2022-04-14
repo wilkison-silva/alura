@@ -77,7 +77,7 @@ class PagamentoFragment : Fragment() {
                 .observe(this, Observer {
                     it?.dado?.let{
                         Toast.makeText(context, COMPRA_REALIZADA, Toast.LENGTH_SHORT).show()
-                        navController.popBackStack(R.id.listaProdutos,false)
+                        navController.navigate(R.id.action_telaPagamento_to_listaProdutos)
                     }
                 })
         }

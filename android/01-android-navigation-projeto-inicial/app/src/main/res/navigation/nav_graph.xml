@@ -10,7 +10,7 @@
         android:name="br.com.alura.aluraesporte.ui.fragment.ListaProdutosFragment"
         android:label="Lista de produtos" >
         <action
-            android:id="@+id/action_listaProdutos_to_detalhesProduto2"
+            android:id="@+id/action_listaProdutos_to_detalhesProduto"
             app:destination="@id/detalhesProduto" />
     </fragment>
     <fragment
@@ -28,5 +28,11 @@
         android:id="@+id/telaPagamento"
         android:name="br.com.alura.aluraesporte.ui.fragment.PagamentoFragment"
         android:label="Pagamento"
-        />
+        >
+        <action
+            android:id="@+id/action_telaPagamento_to_listaProdutos"
+            app:destination="@id/listaProdutos"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="false" />
+    </fragment>
 </navigation>

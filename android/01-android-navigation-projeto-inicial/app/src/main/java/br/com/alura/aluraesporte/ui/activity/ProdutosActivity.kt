@@ -9,7 +9,6 @@ class ProdutosActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.produtos_activity)
-
     }
 
 }
