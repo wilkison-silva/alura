@@ -11,7 +11,11 @@
         android:label="Lista de produtos" >
         <action
             android:id="@+id/action_listaProdutos_to_detalhesProduto"
-            app:destination="@id/detalhesProduto" />
+            app:destination="@id/detalhesProduto"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         tools:layout="@layout/detalhes_produto"
@@ -22,6 +26,9 @@
         <action
             android:id="@+id/action_detalhesProduto_to_telaPagamento"
             app:destination="@id/telaPagamento" />
+        <argument
+            android:name="produtoId"
+            app:argType="long" />
     </fragment>
     <fragment
         tools:layout="@layout/pagamento"
@@ -34,5 +41,8 @@
             app:destination="@id/listaProdutos"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="false" />
+        <argument
+            android:name="produtoId"
+            app:argType="long" />
     </fragment>
 </navigation>
