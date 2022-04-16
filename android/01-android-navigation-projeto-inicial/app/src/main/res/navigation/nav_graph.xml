@@ -12,10 +12,10 @@
         <action
             android:id="@+id/action_listaProdutos_to_detalhesProduto"
             app:destination="@id/detalhesProduto"
-            app:enterAnim="@android:anim/slide_out_right"
-            app:exitAnim="@android:anim/slide_in_left"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         tools:layout="@layout/detalhes_produto"
@@ -25,7 +25,11 @@
         >
         <action
             android:id="@+id/action_detalhesProduto_to_telaPagamento"
-            app:destination="@id/telaPagamento" />
+            app:destination="@id/telaPagamento"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="produtoId"
             app:argType="long" />
