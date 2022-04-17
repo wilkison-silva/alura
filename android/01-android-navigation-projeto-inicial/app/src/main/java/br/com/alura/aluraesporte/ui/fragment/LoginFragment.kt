@@ -34,10 +34,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("Wilkison", "passou aqui")
-        if (viewModel.verificaSeFezLogin()) {
-            vaiParaListaProdutosFragment()
-        }
         login_botao_logar.setOnClickListener {
             viewModel.fazerLogin()
             vaiParaListaProdutosFragment()

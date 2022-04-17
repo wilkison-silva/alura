@@ -8,19 +8,19 @@ private const val CHAVE_LOGADO = "CHAVE_LOGADO"
 class LoginRepository(
     private val preferences: SharedPreferences
 ) {
-
     fun fazerLogin() {
-        preferences.edit {
-            putBoolean(CHAVE_LOGADO, true)
-        }
+        salva(true)
+    }
+
+    fun fazerLogout() {
+        salva(false)
     }
 
     fun verificaSeFezLogin(): Boolean = preferences.getBoolean(CHAVE_LOGADO, false)
 
-    fun fazerLogout() {
+    private fun salva(estado: Boolean) {
         preferences.edit {
-            putBoolean(CHAVE_LOGADO, false)
+            putBoolean(CHAVE_LOGADO, estado)
         }
     }
-
 }

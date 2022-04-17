@@ -16,4 +16,6 @@ class LoginViewModel(
     fun fazerLogout() {
         repository.fazerLogout()
     }
+
+    fun verificaSeNaoFezLogin(): Boolean = !verificaSeFezLogin()
 }
