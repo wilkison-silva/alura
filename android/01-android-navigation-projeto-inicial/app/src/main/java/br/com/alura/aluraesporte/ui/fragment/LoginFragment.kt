@@ -34,6 +34,11 @@ class LoginFragment : Fragment() {
             viewModel.fazerLogin()
             vaiParaListaProdutosFragment()
         }
+        login_botao_cadastrar.setOnClickListener {
+            val actionLoginFragmentToCadastroUsuarioFragment =
+                LoginFragmentDirections.actionLoginFragmentToCadastroUsuarioFragment()
+            navController.navigate(actionLoginFragmentToCadastroUsuarioFragment)
+        }
     }
 
     private fun vaiParaListaProdutosFragment() {
