@@ -1,5 +1,6 @@
 package br.com.alura.aluraesporte.di
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.preference.Preference
 import android.preference.PreferenceManager
@@ -16,6 +17,7 @@ import br.com.alura.aluraesporte.repository.ProdutoRepository
 import br.com.alura.aluraesporte.ui.fragment.DetalhesProdutoFragment
 import br.com.alura.aluraesporte.ui.fragment.ListaProdutosFragment
 import br.com.alura.aluraesporte.ui.fragment.PagamentoFragment
+import br.com.alura.aluraesporte.ui.recyclerview.adapter.ListaPagamentosAdapter
 import br.com.alura.aluraesporte.ui.recyclerview.adapter.ProdutosAdapter
 import br.com.alura.aluraesporte.ui.viewmodel.*
 import kotlinx.coroutines.CoroutineScope
@@ -86,6 +88,7 @@ val uiModule = module {
     factory<ListaProdutosFragment> { ListaProdutosFragment() }
     factory<PagamentoFragment> { PagamentoFragment() }
     factory<ProdutosAdapter> { ProdutosAdapter(get()) }
+    factory<ListaPagamentosAdapter> { ListaPagamentosAdapter(get()) }
 }
 
 val viewModelModule = module {
