@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.alura.aluraesporte.R
+import br.com.alura.aluraesporte.ui.viewmodel.EstadoAppViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
@@ -19,6 +21,7 @@ class LoginFragment : Fragment() {
     }
 
     private val viewModel: LoginViewModel by viewModel()
+    private val viewModelEstadoApp: EstadoAppViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +42,7 @@ class LoginFragment : Fragment() {
                 LoginFragmentDirections.actionLoginFragmentToCadastroUsuarioFragment()
             navController.navigate(actionLoginFragmentToCadastroUsuarioFragment)
         }
+        viewModelEstadoApp.mostrarAppBar(false)
     }
 
     private fun vaiParaListaProdutosFragment() {
