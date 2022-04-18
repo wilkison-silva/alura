@@ -86,6 +86,6 @@
     <fragment
         android:id="@+id/listaPagamentosFragment"
         android:name="br.com.alura.aluraesporte.ui.fragment.ListaPagamentosFragment"
-        android:label="ListaPagamentosFragment"
-        tools:layout="@layout/lista_pagamentos"/>
+        android:label="Lista de Pagamentos"
+        tools:layout="@layout/lista_pagamentos" />
 </navigation>

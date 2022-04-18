@@ -7,7 +7,7 @@
     </item>
     <item
         android:id="@+id/listaPagamentosFragment"
-        android:title="Produtos"
+        android:title="Pagamento"
         android:icon="@drawable/ic_pagamentos">
     </item>
 
