@@ -6,14 +6,22 @@ import androidx.lifecycle.ViewModel
 
 class EstadoAppViewModel : ViewModel() {
 
-    val appBar: LiveData<Boolean> get() = _appBar
+    val componentesVisuais: LiveData<ComponentesVisuais> get() = _componentesVisuais
 
-    private var _appBar: MutableLiveData<Boolean> = MutableLiveData<Boolean>().also {
-        it.value = false
+    private var _componentesVisuais: MutableLiveData<ComponentesVisuais> = MutableLiveData<ComponentesVisuais>().also {
+        it.value = ComponentesVisuais()
     }
 
-    fun mostrarAppBar(estado: Boolean){
-        _appBar.value = estado
+    fun mostrarAppBar(componentesVisuais: ComponentesVisuais){
+        _componentesVisuais.value = componentesVisuais
     }
+
+    class ComponentesVisuais(
+        val appBar: Boolean = false,
+        val bottomNavigation: Boolean = false
+    ){
+
+    }
+
 
 }

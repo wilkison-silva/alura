@@ -11,6 +11,7 @@ import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
 import br.com.alura.aluraesporte.ui.viewmodel.DetalhesProdutoViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.EstadoAppViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.EstadoAppViewModel.ComponentesVisuais
 import kotlinx.android.synthetic.main.detalhes_produto.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -48,7 +49,10 @@ class DetalhesProdutoFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         buscaProduto()
         configuraBotaoComprar()
-        viewModelEstadoApp.mostrarAppBar(true)
+        viewModelEstadoApp.mostrarAppBar(ComponentesVisuais(
+            appBar = true,
+            bottomNavigation = false
+        ))
     }
 
     private fun configuraBotaoComprar() {

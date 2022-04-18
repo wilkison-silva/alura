@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.ui.viewmodel.EstadoAppViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.EstadoAppViewModel.ComponentesVisuais
 import kotlinx.android.synthetic.main.cadastro_usuario.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -40,6 +41,8 @@ class CadastroUsuarioFragment : Fragment() {
         cadastro_usuario_botao_cadastrar.setOnClickListener {
             navController.popBackStack()
         }
-        viewModelEstadoApp.mostrarAppBar(true)
+        viewModelEstadoApp.mostrarAppBar(
+            ComponentesVisuais(appBar = true, bottomNavigation = false)
+        )
     }
 }

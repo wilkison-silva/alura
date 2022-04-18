@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.ui.viewmodel.EstadoAppViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.EstadoAppViewModel.ComponentesVisuais
 import br.com.alura.aluraesporte.ui.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -42,7 +43,10 @@ class LoginFragment : Fragment() {
                 LoginFragmentDirections.actionLoginFragmentToCadastroUsuarioFragment()
             navController.navigate(actionLoginFragmentToCadastroUsuarioFragment)
         }
-        viewModelEstadoApp.mostrarAppBar(false)
+        viewModelEstadoApp.mostrarAppBar(ComponentesVisuais(
+            appBar = false,
+            bottomNavigation = false
+        ))
     }
 
     private fun vaiParaListaProdutosFragment() {

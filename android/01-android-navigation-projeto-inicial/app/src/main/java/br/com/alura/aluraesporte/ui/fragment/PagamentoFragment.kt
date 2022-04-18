@@ -13,6 +13,7 @@ import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
 import br.com.alura.aluraesporte.model.Pagamento
 import br.com.alura.aluraesporte.model.Produto
 import br.com.alura.aluraesporte.ui.viewmodel.EstadoAppViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.EstadoAppViewModel.ComponentesVisuais
 import br.com.alura.aluraesporte.ui.viewmodel.PagamentoViewModel
 import kotlinx.android.synthetic.main.pagamento.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -52,7 +53,10 @@ class PagamentoFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         configuraBotaoConfirmaPagamento()
         buscaProduto()
-        viewModelEstadoApp.mostrarAppBar(true)
+        viewModelEstadoApp.mostrarAppBar(ComponentesVisuais(
+            appBar = true,
+            bottomNavigation = false
+        ))
     }
 
     private fun buscaProduto() {
