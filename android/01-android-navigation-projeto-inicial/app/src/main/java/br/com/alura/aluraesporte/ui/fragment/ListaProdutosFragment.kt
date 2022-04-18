@@ -91,9 +91,8 @@ class ListaProdutosFragment : Fragment() {
     }
 
     private fun vaiParaLoginFragment() {
-        val actionListaProdutosToLoginFragment =
-            ListaProdutosFragmentDirections.actionListaProdutosToLoginFragment()
-        navController.navigate(actionListaProdutosToLoginFragment)
+        val actionGlobalLoginFragment = ListaProdutosFragmentDirections.actionGlobalLoginFragment()
+        navController.navigate(actionGlobalLoginFragment)
     }
 
 }

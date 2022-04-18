@@ -4,28 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/listaProdutos">
-    <fragment
-        android:id="@+id/listaProdutos"
-        android:name="br.com.alura.aluraesporte.ui.fragment.ListaProdutosFragment"
-        android:label="Lista de produtos"
-        tools:layout="@layout/lista_produtos">
-        <action
-            android:id="@+id/action_listaProdutos_to_detalhesProduto"
-            app:destination="@id/detalhesProduto"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_listaProdutos_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/listaProdutos"
-            app:popUpToInclusive="true" />
-    </fragment>
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/listaProdutos"
+        app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/detalhesProduto"
         android:name="br.com.alura.aluraesporte.ui.fragment.DetalhesProdutoFragment"
@@ -70,5 +57,18 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/listaProdutos"
+        android:name="br.com.alura.aluraesporte.ui.fragment.ListaProdutosFragment"
+        android:label="Lista de produtos"
+        tools:layout="@layout/lista_produtos">
+        <action
+            android:id="@+id/action_listaProdutos_to_detalhesProduto"
+            app:destination="@id/detalhesProduto"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>
