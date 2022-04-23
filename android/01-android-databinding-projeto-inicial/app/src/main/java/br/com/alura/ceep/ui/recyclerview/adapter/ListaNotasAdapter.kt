@@ -2,23 +2,12 @@ package br.com.alura.ceep.ui.recyclerview.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.databinding.BindingAdapter
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import br.com.alura.ceep.BR
-import br.com.alura.ceep.R
+import br.com.alura.ceep.databinding.ItemNotaBinding
 import br.com.alura.ceep.model.Nota
-import br.com.alura.ceep.ui.extensions.carregaImagem
-import kotlinx.android.synthetic.main.item_nota.view.*
 
 class ListaNotasAdapter(
     private val context: Context,
@@ -27,9 +16,8 @@ class ListaNotasAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(context)
-        val viewDataBinding = DataBindingUtil.inflate<ViewDataBinding>(
+        val viewDataBinding: ItemNotaBinding = ItemNotaBinding.inflate(
             inflater,
-            R.layout.item_nota,
             parent,
             false
         )
@@ -43,7 +31,7 @@ class ListaNotasAdapter(
         }
     }
 
-    inner class ViewHolder(private val viewDataBinding: ViewDataBinding) :
+    inner class ViewHolder(private val viewDataBinding: ItemNotaBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
 
         private lateinit var nota: Nota
@@ -58,7 +46,7 @@ class ListaNotasAdapter(
 
         fun vincula(nota: Nota) {
             this.nota = nota
-            viewDataBinding.setVariable(BR.nota, nota)
+            viewDataBinding.nota = nota
         }
 
     }
@@ -75,7 +63,3 @@ object DiffCallback : DiffUtil.ItemCallback<Nota>() {
 
 }
 
-@BindingAdapter("carregaImagem")
-fun carregaImagemPelaUrl(view: ImageView, url: String) {
-    view.carregaImagem(url)
-}
