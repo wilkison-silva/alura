@@ -8,12 +8,16 @@
         <variable
             name="nota"
             type="br.com.alura.ceep.model.Nota" />
+        <variable
+            name="listener"
+            type="View.OnClickListener" />
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         app:cardCornerRadius="8dp"
+        android:onClick="@{listener}"
         app:cardElevation="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
