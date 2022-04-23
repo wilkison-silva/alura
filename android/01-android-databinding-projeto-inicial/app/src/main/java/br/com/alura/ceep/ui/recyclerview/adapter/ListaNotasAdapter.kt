@@ -8,6 +8,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
@@ -42,18 +43,10 @@ class ListaNotasAdapter(
         }
     }
 
-    inner class ViewHolder(private val viewDataBinding: ViewDataBinding) : RecyclerView.ViewHolder(viewDataBinding.root) {
+    inner class ViewHolder(private val viewDataBinding: ViewDataBinding) :
+        RecyclerView.ViewHolder(viewDataBinding.root) {
 
         private lateinit var nota: Nota
-        private val campoDescricao: TextView by lazy {
-            itemView.item_nota_descricao
-        }
-        private val campoFavorita: ImageView by lazy {
-            itemView.item_nota_favorita
-        }
-        private val campoImagem: ImageView by lazy {
-            itemView.item_nota_imagem
-        }
 
         init {
             itemView.setOnClickListener {
@@ -65,19 +58,7 @@ class ListaNotasAdapter(
 
         fun vincula(nota: Nota) {
             this.nota = nota
-            viewDataBinding.setVariable(BR.nota,nota)
-            campoDescricao.text = nota.descricao
-            if (this.nota.favorita) {
-                campoFavorita.visibility = VISIBLE
-            } else {
-                campoFavorita.visibility = GONE
-            }
-            campoImagem.carregaImagem(nota.imagemUrl)
-            if (nota.imagemUrl.isEmpty()) {
-                campoImagem.visibility = GONE
-            } else {
-                campoImagem.visibility = VISIBLE
-            }
+            viewDataBinding.setVariable(BR.nota, nota)
         }
 
     }
@@ -92,4 +73,9 @@ object DiffCallback : DiffUtil.ItemCallback<Nota>() {
 
     override fun areContentsTheSame(oldItem: Nota, newItem: Nota) = oldItem == newItem
 
+}
+
+@BindingAdapter("carregaImagem")
+fun carregaImagemPelaUrl(view: ImageView, url: String) {
+    view.carregaImagem(url)
 }
