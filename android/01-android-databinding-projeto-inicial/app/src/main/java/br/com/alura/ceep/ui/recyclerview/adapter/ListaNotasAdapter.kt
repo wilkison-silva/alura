@@ -50,7 +50,6 @@ class ListaNotasAdapter(
         }
 
     }
-
 }
 
 object DiffCallback : DiffUtil.ItemCallback<Nota>() {
