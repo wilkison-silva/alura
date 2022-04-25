@@ -5,6 +5,9 @@
         <variable
             name="nota"
             type="br.com.alura.ceep.model.Nota" />
+        <variable
+            name="listener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:checked="@{nota.favorita}"
+            android:checked="@={nota.favorita}"
             app:layout_constraintBottom_toBottomOf="@id/formulario_nota_titulo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/formulario_nota_titulo"
@@ -35,7 +38,7 @@
             android:hint="@string/titulo"
             android:inputType="text"
             android:textSize="32sp"
-            android:text="@{nota.titulo}"
+            android:text="@={nota.titulo}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/formulario_nota_favorita"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/formulario_nota_titulo"
-            android:text="@{nota.descricao}"
+            android:text="@={nota.descricao}"
             tools:text="@tools:sample/lorem" />
 
         <ImageView
@@ -69,6 +72,7 @@
             android:layout_height="200dp"
             carregaImagem="@{nota.imagemUrl}"
             android:visibility="@{nota.imagemUrl.empty ? View.GONE : View.VISIBLE}"
+            android:onClick="@{listener}"
             android:contentDescription="@string/imagem_da_nota"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,9 +84,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:visibility="@{nota.imagemUrl.empty ? View.GONE : View.VISIBLE}"
+            android:visibility="@{nota.imagemUrl.empty ? View.VISIBLE : View.GONE}"
             android:src="@drawable/ic_action_adiciona_foto"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{listener}"
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
