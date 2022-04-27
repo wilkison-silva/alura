@@ -4,7 +4,7 @@
         <import type="android.view.View"/>
         <variable
             name="nota"
-            type="br.com.alura.ceep.model.Nota" />
+            type="br.com.alura.ceep.ui.databinding.NotaData" />
         <variable
             name="listener"
             type="android.view.View.OnClickListener" />
