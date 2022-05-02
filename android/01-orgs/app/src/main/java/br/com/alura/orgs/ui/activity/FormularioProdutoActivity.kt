@@ -15,6 +15,9 @@ import br.com.alura.orgs.extensions.tentaCarregarImagem
 import br.com.alura.orgs.model.Produto
 import br.com.alura.orgs.ui.dialog.FormularioImagemDialog
 import coil.load
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
 class FormularioProdutoActivity :
@@ -27,6 +30,8 @@ class FormularioProdutoActivity :
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
 
+    private val scope = CoroutineScope(Dispatchers.IO)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         configuraBotaoSalvar()
@@ -35,23 +40,31 @@ class FormularioProdutoActivity :
         title = "Cadastrar produto"
 
         binding.activityFormularioProdutoImagem.setOnClickListener {
-            FormularioImagemDialog(this)
-                .mostra(this.urlImagem) { urlImagem ->
-                    this.urlImagem = urlImagem
-                    binding.activityFormularioProdutoImagem.tentaCarregarImagem(this.urlImagem)
-                }
+            mostraFormularioImagem()
         }
 
         intent.getParcelableExtra<Produto>("produto")?.let { produtoRecebido ->
             title = "Alterar produto"
-            with(binding) {
-                activityFormularioProdutoImagem.tentaCarregarImagem(produtoRecebido.urlImagem)
-                activityFormularioProdutoNome.setText(produtoRecebido.nome)
-                activityFormularioProdutoDescricao.setText(produtoRecebido.descricao)
-                activityFormularioProdutoValor.setText(produtoRecebido.valor.toPlainString())
-                idProduto = produtoRecebido.id
-                urlImagem = produtoRecebido.urlImagem
+            preencheCampos(produtoRecebido)
+        }
+    }
+
+    private fun mostraFormularioImagem() {
+        FormularioImagemDialog(this)
+            .mostra(this.urlImagem) { urlImagem ->
+                this.urlImagem = urlImagem
+                binding.activityFormularioProdutoImagem.tentaCarregarImagem(this.urlImagem)
             }
+    }
+
+    private fun preencheCampos(produtoRecebido: Produto) {
+        with(binding) {
+            activityFormularioProdutoImagem.tentaCarregarImagem(produtoRecebido.urlImagem)
+            activityFormularioProdutoNome.setText(produtoRecebido.nome)
+            activityFormularioProdutoDescricao.setText(produtoRecebido.descricao)
+            activityFormularioProdutoValor.setText(produtoRecebido.valor.toPlainString())
+            idProduto = produtoRecebido.id
+            urlImagem = produtoRecebido.urlImagem
         }
     }
 
@@ -61,13 +74,15 @@ class FormularioProdutoActivity :
         val produtoDao = db.produtoDao()
         botaoSalvar.setOnClickListener {
             val produtoNovo = criaProduto()
-            if(idProduto == 0L){
-                produtoDao.salva(produtoNovo)
+            scope.launch {
+                if(idProduto == 0L){
+                    produtoDao.salva(produtoNovo)
+                }
+                else {
+                    produtoDao.altera(produtoNovo)
+                }
+                finish()
             }
-            else {
-                produtoDao.altera(produtoNovo)
-            }
-            finish()
         }
     }
 

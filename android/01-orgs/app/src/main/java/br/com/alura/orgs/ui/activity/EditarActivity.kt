@@ -14,6 +14,10 @@ import br.com.alura.orgs.databinding.ActivityEditarBinding
 import br.com.alura.orgs.databinding.ActivityListaProdutosActivityBinding
 import br.com.alura.orgs.extensions.tentaCarregarImagem
 import br.com.alura.orgs.model.Produto
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.w3c.dom.Text
 import java.math.BigDecimal
 import java.text.NumberFormat
@@ -26,6 +30,8 @@ class EditarActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityEditarBinding.inflate(layoutInflater);
     }
+
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +55,12 @@ class EditarActivity : AppCompatActivity() {
         val produtoDao = db.produtoDao()
         intent.getParcelableExtra<Produto>("produto")?.let { produtoRecebido ->
             produto = produtoRecebido
-            produtoDao.buscaPorId(produto.id)?.let { configuraCampos(it) }
+            scope.launch {
+                val produtoEncontrado = produtoDao.buscaPorId(produto.id) as Produto
+                withContext(Dispatchers.Main){
+                    configuraCampos(produtoEncontrado)
+                }
+            }
         } ?: finish()
      }
 
@@ -88,8 +99,10 @@ class EditarActivity : AppCompatActivity() {
                     }
                 }
                 R.id.activity_editar_menu_deletar -> {
-                    produtoDao.remove(produto)
-                    finish()
+                    scope.launch {
+                        produtoDao.remove(produto)
+                        finish()
+                    }
                 }
             }
         }
