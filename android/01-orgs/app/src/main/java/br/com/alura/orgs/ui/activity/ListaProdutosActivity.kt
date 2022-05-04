@@ -37,15 +37,6 @@ class ListaProdutosActivity : AppCompatActivity() {
         configuraFab()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        lifecycleScope.launch {
-            val produtosEncontrados = dao.buscaTodos()
-            adapter.atualiza(produtosEncontrados)
-        }
-    }
-
     private fun configuraFab() {
         val fab = binding.activityListaProdutosFab
         fab.setOnClickListener {
@@ -61,11 +52,21 @@ class ListaProdutosActivity : AppCompatActivity() {
     private fun configuraRecyclerView() {
         val recyclerView = binding.activityListaProdutosRecyclerView
         recyclerView.adapter = adapter
+        configuraAdapter()
+    }
+
+    private fun configuraAdapter() {
         adapter.onClickItemListener = { produto: Produto, view: View ->
             val intent = Intent(this, EditarActivity::class.java).apply {
                 putExtra("produto", produto)
             }
             startActivity(intent)
+        }
+        lifecycleScope.launch {
+            val produtosEncontrados = dao.buscaTodos()
+            produtosEncontrados.collect{
+                adapter.atualiza(it)
+            }
         }
     }
 
