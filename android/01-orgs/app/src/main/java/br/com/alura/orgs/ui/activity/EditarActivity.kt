@@ -8,12 +8,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import br.com.alura.orgs.R
 import br.com.alura.orgs.database.AppDatabase
 import br.com.alura.orgs.databinding.ActivityEditarBinding
 import br.com.alura.orgs.databinding.ActivityListaProdutosActivityBinding
 import br.com.alura.orgs.extensions.tentaCarregarImagem
 import br.com.alura.orgs.model.Produto
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.w3c.dom.Text
 import java.math.BigDecimal
 import java.text.NumberFormat
@@ -27,6 +32,11 @@ class EditarActivity : AppCompatActivity() {
         ActivityEditarBinding.inflate(layoutInflater);
     }
 
+    private val dao by lazy {
+        val db = AppDatabase.getInstance(this)
+        db.produtoDao()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -38,18 +48,12 @@ class EditarActivity : AppCompatActivity() {
     }
 
     private fun tentaCarregarProduto(){
-//        val intent: Intent = intent
-//        if (intent.hasExtra("produto")) {
-//            produto = intent.getParcelableExtra<Produto>("produto") as Produto
-//            if (produto != null) configuraCampos(produto)
-//        } else {
-//            finish()
-//        }
-        val db = AppDatabase.getInstance(this)
-        val produtoDao = db.produtoDao()
         intent.getParcelableExtra<Produto>("produto")?.let { produtoRecebido ->
             produto = produtoRecebido
-            produtoDao.buscaPorId(produto.id)?.let { configuraCampos(it) }
+            lifecycleScope.launch {
+                val produtoEncontrado = dao.buscaPorId(produto.id) as Produto
+                configuraCampos(produtoEncontrado)
+            }
         } ?: finish()
      }
 
@@ -88,8 +92,10 @@ class EditarActivity : AppCompatActivity() {
                     }
                 }
                 R.id.activity_editar_menu_deletar -> {
-                    produtoDao.remove(produto)
-                    finish()
+                    lifecycleScope.launch {
+                        produtoDao.remove(produto)
+                        finish()
+                    }
                 }
             }
         }
