@@ -2,27 +2,32 @@ package br.com.alura.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuInflater
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import br.com.alura.orgs.R
-import br.com.alura.orgs.dao.ProdutosDao
 import br.com.alura.orgs.database.AppDatabase
 import br.com.alura.orgs.databinding.ActivityListaProdutosActivityBinding
+import br.com.alura.orgs.model.Produto
 import br.com.alura.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
+
 
 private const val TAG = "ListaProdutosActivity"
 
-class ListaProdutosActivity : AppCompatActivity() {
 
-    private val dao = ProdutosDao()
-    private lateinit var adapter: ListaProdutosAdapter
+class ListaProdutosActivity : AppCompatActivity() {
+    private val adapter: ListaProdutosAdapter = ListaProdutosAdapter(this)
 
     private val binding by lazy {
         ActivityListaProdutosActivityBinding.inflate(layoutInflater);
+    }
+
+    private val dao by lazy {
+        val db = AppDatabase.getInstance(this)
+        db.produtoDao()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,15 +39,11 @@ class ListaProdutosActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val db = AppDatabase.getInstance(this)
-        val produtoDao = db.produtoDao()
-        MainScope().launch {
-            val produtosEncontrados = withContext(Dispatchers.IO) {
-                produtoDao.buscaTodos()
-            }
+
+        lifecycleScope.launch {
+            val produtosEncontrados = dao.buscaTodos()
             adapter.atualiza(produtosEncontrados)
         }
-
     }
 
     private fun configuraFab() {
@@ -59,17 +60,13 @@ class ListaProdutosActivity : AppCompatActivity() {
 
     private fun configuraRecyclerView() {
         val recyclerView = binding.activityListaProdutosRecyclerView
-        adapter = ListaProdutosAdapter(
-            context = this,
-            produtos = dao.buscaTodos()
-        ) { produto, _ ->
+        recyclerView.adapter = adapter
+        adapter.onClickItemListener = { produto: Produto, view: View ->
             val intent = Intent(this, EditarActivity::class.java).apply {
                 putExtra("produto", produto)
             }
             startActivity(intent)
-//            showPopup(view)
         }
-        recyclerView.adapter = adapter
     }
 
     fun showPopup(view: View) {

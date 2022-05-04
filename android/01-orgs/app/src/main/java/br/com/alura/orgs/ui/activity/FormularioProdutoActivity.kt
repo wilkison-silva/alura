@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import br.com.alura.orgs.R
 import br.com.alura.orgs.dao.ProdutosDao
 import br.com.alura.orgs.database.AppDatabase
@@ -30,7 +31,10 @@ class FormularioProdutoActivity :
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
 
-    private val scope = CoroutineScope(Dispatchers.IO)
+    private val dao by lazy {
+        val db = AppDatabase.getInstance(this)
+        db.produtoDao()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,16 +74,15 @@ class FormularioProdutoActivity :
 
     private fun configuraBotaoSalvar() {
         val botaoSalvar = binding.activityFormularioProdutoBotaoSalvar
-        val db = AppDatabase.getInstance(this)
-        val produtoDao = db.produtoDao()
+
         botaoSalvar.setOnClickListener {
             val produtoNovo = criaProduto()
-            scope.launch {
+            lifecycleScope.launch {
                 if(idProduto == 0L){
-                    produtoDao.salva(produtoNovo)
+                    dao.salva(produtoNovo)
                 }
                 else {
-                    produtoDao.altera(produtoNovo)
+                    dao.altera(produtoNovo)
                 }
                 finish()
             }

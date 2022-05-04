@@ -15,10 +15,10 @@ import java.util.*
 
 class ListaProdutosAdapter(
     private val context: Context,
-    produtos: List<Produto>,
-    var onClickItemListener: (produto: Produto, view: View) -> Unit
+    produtos: List<Produto> = listOf(),
+    var onClickItemListener: (produto: Produto, view: View) -> Unit = { _, _ -> },
 
-) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
+    ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
 
     private val produtos = produtos.toMutableList()
 

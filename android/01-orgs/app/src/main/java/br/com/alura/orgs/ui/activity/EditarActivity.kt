@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import br.com.alura.orgs.R
 import br.com.alura.orgs.database.AppDatabase
 import br.com.alura.orgs.databinding.ActivityEditarBinding
@@ -31,7 +32,10 @@ class EditarActivity : AppCompatActivity() {
         ActivityEditarBinding.inflate(layoutInflater);
     }
 
-    private val scope = CoroutineScope(Dispatchers.IO)
+    private val dao by lazy {
+        val db = AppDatabase.getInstance(this)
+        db.produtoDao()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,22 +48,11 @@ class EditarActivity : AppCompatActivity() {
     }
 
     private fun tentaCarregarProduto(){
-//        val intent: Intent = intent
-//        if (intent.hasExtra("produto")) {
-//            produto = intent.getParcelableExtra<Produto>("produto") as Produto
-//            if (produto != null) configuraCampos(produto)
-//        } else {
-//            finish()
-//        }
-        val db = AppDatabase.getInstance(this)
-        val produtoDao = db.produtoDao()
         intent.getParcelableExtra<Produto>("produto")?.let { produtoRecebido ->
             produto = produtoRecebido
-            scope.launch {
-                val produtoEncontrado = produtoDao.buscaPorId(produto.id) as Produto
-                withContext(Dispatchers.Main){
-                    configuraCampos(produtoEncontrado)
-                }
+            lifecycleScope.launch {
+                val produtoEncontrado = dao.buscaPorId(produto.id) as Produto
+                configuraCampos(produtoEncontrado)
             }
         } ?: finish()
      }
@@ -99,7 +92,7 @@ class EditarActivity : AppCompatActivity() {
                     }
                 }
                 R.id.activity_editar_menu_deletar -> {
-                    scope.launch {
+                    lifecycleScope.launch {
                         produtoDao.remove(produto)
                         finish()
                     }
