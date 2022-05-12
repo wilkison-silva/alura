@@ -19,10 +19,11 @@ private const val TAG = "ListaProdutosActivity"
 
 
 class ListaProdutosActivity : AppCompatActivity() {
+
     private val adapter: ListaProdutosAdapter = ListaProdutosAdapter(this)
 
     private val binding by lazy {
-        ActivityListaProdutosActivityBinding.inflate(layoutInflater);
+        ActivityListaProdutosActivityBinding.inflate(layoutInflater)
     }
 
     private val dao by lazy {
@@ -56,7 +57,7 @@ class ListaProdutosActivity : AppCompatActivity() {
     }
 
     private fun configuraAdapter() {
-        adapter.onClickItemListener = { produto: Produto, view: View ->
+        adapter.quandoClicarNoItem = { produto: Produto, view: View ->
             val intent = Intent(this, EditarActivity::class.java).apply {
                 putExtra("produto", produto)
             }
