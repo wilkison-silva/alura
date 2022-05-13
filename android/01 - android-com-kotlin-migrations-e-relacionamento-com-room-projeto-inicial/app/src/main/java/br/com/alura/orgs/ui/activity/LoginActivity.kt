@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
 import br.com.alura.orgs.database.AppDatabase
+import br.com.alura.orgs.database.preference.CHAVE_USUARIO_ID_LOGADO
+import br.com.alura.orgs.database.preference.dataStore
 import br.com.alura.orgs.databinding.ActivityLoginBinding
 import br.com.alura.orgs.extensions.vaiPara
 import kotlinx.coroutines.launch
@@ -38,8 +41,9 @@ class LoginActivity : AppCompatActivity() {
                     usuarioNome = usuario,
                     usuarioSenha = senha
                 )?.let { usuario ->
-                    vaiPara(ListaProdutosActivity::class.java){
-                        putExtra("CHAVE_USUARIO_ID", usuario.id)
+                    vaiPara(ListaProdutosActivity::class.java)
+                    dataStore.edit { preferences ->
+                        preferences[CHAVE_USUARIO_ID_LOGADO] = usuario.id
                     }
                 }
                     ?: Toast.makeText(

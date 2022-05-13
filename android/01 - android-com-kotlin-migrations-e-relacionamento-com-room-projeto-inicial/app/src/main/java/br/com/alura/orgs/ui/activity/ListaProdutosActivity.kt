@@ -6,6 +6,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import br.com.alura.orgs.database.AppDatabase
+import br.com.alura.orgs.database.preference.CHAVE_USUARIO_ID_LOGADO
+import br.com.alura.orgs.database.preference.dataStore
 import br.com.alura.orgs.databinding.ActivityListaProdutosActivityBinding
 import br.com.alura.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
 import kotlinx.coroutines.flow.collect
@@ -38,9 +40,12 @@ class ListaProdutosActivity : AppCompatActivity() {
                     adapter.atualiza(produtos)
                 }
             }
-            intent.getStringExtra("CHAVE_USUARIO_ID")?.let { usuarioId ->
-                usuarioDao.buscaPorId(usuarioId).collect { usuarioEncontrado ->
-                    Log.i("ListaProdutos", "usuario: $usuarioEncontrado")
+
+            dataStore.data.collect { preferences ->
+                preferences[CHAVE_USUARIO_ID_LOGADO]?.let { usuarioId ->
+                    usuarioDao.buscaPorId(usuarioId).collect { usuarioEncontrado ->
+                        Log.i("ListaProdutos", "usuario: $usuarioEncontrado")
+                    }
                 }
             }
         }
