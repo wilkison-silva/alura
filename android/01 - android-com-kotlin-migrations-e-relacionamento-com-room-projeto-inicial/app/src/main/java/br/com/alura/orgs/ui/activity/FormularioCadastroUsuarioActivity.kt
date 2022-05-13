@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import br.com.alura.orgs.database.AppDatabase
 import br.com.alura.orgs.databinding.ActivityFormularioCadastroUsuarioBinding
+import br.com.alura.orgs.extensions.toHash
 import br.com.alura.orgs.model.Usuario
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -45,7 +46,7 @@ class FormularioCadastroUsuarioActivity : AppCompatActivity() {
     private fun criaUsuario(): Usuario {
         val usuario = binding.activityFormularioCadastroUsuario.text.toString()
         val nome = binding.activityFormularioCadastroNome.text.toString()
-        val senha = binding.activityFormularioCadastroSenha.text.toString()
+        val senha = binding.activityFormularioCadastroSenha.text.toString().toHash()
         return Usuario(usuario, nome, senha)
     }
 }
