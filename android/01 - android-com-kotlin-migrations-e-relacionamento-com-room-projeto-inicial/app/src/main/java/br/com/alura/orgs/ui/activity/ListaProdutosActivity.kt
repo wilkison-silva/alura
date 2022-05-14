@@ -49,8 +49,10 @@ class ListaProdutosActivity : AppCompatActivity() {
             launch {
                 dataStore.data.collect { preferences ->
                     preferences[CHAVE_USUARIO_ID_LOGADO]?.let { usuarioId ->
-                        usuarioDao.buscaPorId(usuarioId).collect { usuarioEncontrado ->
-                            Log.i("ListaProdutos", "usuario: $usuarioEncontrado")
+                        launch{
+                            usuarioDao.buscaPorId(usuarioId).collect { usuarioEncontrado ->
+                                Log.i("ListaProdutos", "usuario: $usuarioEncontrado")
+                            }
                         }
                     } ?: vaiParaLogin()
                 }
@@ -97,13 +99,11 @@ class ListaProdutosActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_lista_produtos_activity_deslogar -> {
-                Log.i("Testando", "testando aqui")
                 lifecycleScope.launch{
                     dataStore.edit { preferences ->
                         preferences.remove(CHAVE_USUARIO_ID_LOGADO)
                     }
                 }
-                vaiParaLogin()
             }
         }
         return super.onOptionsItemSelected(item)
