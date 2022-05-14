@@ -11,6 +11,7 @@ import br.com.alura.orgs.database.preference.CHAVE_USUARIO_ID_LOGADO
 import br.com.alura.orgs.database.preference.dataStore
 import br.com.alura.orgs.databinding.ActivityLoginBinding
 import br.com.alura.orgs.extensions.toHash
+import br.com.alura.orgs.extensions.toast
 import br.com.alura.orgs.extensions.vaiPara
 import kotlinx.coroutines.launch
 
@@ -35,25 +36,24 @@ class LoginActivity : AppCompatActivity() {
         binding.activityLoginBotaoEntrar.setOnClickListener {
             val usuario = binding.activityLoginUsuario.text.toString()
             val senha = binding.activityLoginSenha.text.toString().toHash()
-            Log.i("LoginActivity", "onCreate: $usuario - $senha")
 
-            lifecycleScope.launch {
-                usuarioDao.autentica(
-                    usuarioNome = usuario,
-                    usuarioSenha = senha
-                )?.let { usuario ->
-                    vaiPara(ListaProdutosActivity::class.java)
-                    dataStore.edit { preferences ->
-                        preferences[CHAVE_USUARIO_ID_LOGADO] = usuario.id
-                    }
-                    finish()
+            autentica(usuario, senha)
+        }
+    }
+
+    private fun autentica(usuario: String, senha: String) {
+        lifecycleScope.launch {
+            usuarioDao.autentica(
+                usuarioNome = usuario,
+                usuarioSenha = senha
+            )?.let { usuario ->
+                vaiPara(ListaProdutosActivity::class.java)
+                dataStore.edit { preferences ->
+                    preferences[CHAVE_USUARIO_ID_LOGADO] = usuario.id
                 }
-                    ?: Toast.makeText(
-                        this@LoginActivity,
-                        "Usuário não encontrado",
-                        Toast.LENGTH_LONG
-                    ).show()
+                finish()
             }
+                ?: toast("Usuário não encontrado")
         }
     }
 
