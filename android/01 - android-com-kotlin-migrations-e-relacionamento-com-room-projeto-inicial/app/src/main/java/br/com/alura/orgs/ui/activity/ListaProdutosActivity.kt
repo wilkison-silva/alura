@@ -3,12 +3,17 @@ package br.com.alura.orgs.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
+import br.com.alura.orgs.R
 import br.com.alura.orgs.database.AppDatabase
 import br.com.alura.orgs.database.preference.CHAVE_USUARIO_ID_LOGADO
 import br.com.alura.orgs.database.preference.dataStore
 import br.com.alura.orgs.databinding.ActivityListaProdutosActivityBinding
+import br.com.alura.orgs.extensions.vaiPara
 import br.com.alura.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -41,14 +46,21 @@ class ListaProdutosActivity : AppCompatActivity() {
                 }
             }
 
-            dataStore.data.collect { preferences ->
-                preferences[CHAVE_USUARIO_ID_LOGADO]?.let { usuarioId ->
-                    usuarioDao.buscaPorId(usuarioId).collect { usuarioEncontrado ->
-                        Log.i("ListaProdutos", "usuario: $usuarioEncontrado")
-                    }
+            launch {
+                dataStore.data.collect { preferences ->
+                    preferences[CHAVE_USUARIO_ID_LOGADO]?.let { usuarioId ->
+                        usuarioDao.buscaPorId(usuarioId).collect { usuarioEncontrado ->
+                            Log.i("ListaProdutos", "usuario: $usuarioEncontrado")
+                        }
+                    } ?: vaiParaLogin()
                 }
             }
         }
+    }
+
+    private fun vaiParaLogin() {
+        vaiPara(LoginActivity::class.java)
+        finish()
     }
 
     private fun configuraFab() {
@@ -76,5 +88,26 @@ class ListaProdutosActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_lista_produtos_activity, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_lista_produtos_activity_deslogar -> {
+                Log.i("Testando", "testando aqui")
+                lifecycleScope.launch{
+                    dataStore.edit { preferences ->
+                        preferences.remove(CHAVE_USUARIO_ID_LOGADO)
+                    }
+                }
+                vaiParaLogin()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
 }
