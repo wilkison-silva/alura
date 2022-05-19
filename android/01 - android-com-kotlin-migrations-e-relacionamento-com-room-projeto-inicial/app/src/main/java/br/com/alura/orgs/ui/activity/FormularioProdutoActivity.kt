@@ -40,13 +40,7 @@ class FormularioProdutoActivity : UsuarioBaseActivity() {
                 }
         }
         tentaCarregarProduto()
-        lifecycleScope.launch {
-            launch {
-                usuario.filterNotNull().collect {
-                    Log.i("Formulario Produto", "usuario: $it")
-                }
-            }
-        }
+
     }
 
     private fun tentaCarregarProduto() {
@@ -69,15 +63,17 @@ class FormularioProdutoActivity : UsuarioBaseActivity() {
         val botaoSalvar = binding.activityFormularioProdutoBotaoSalvar
 
         botaoSalvar.setOnClickListener {
-            val produtoNovo = criaProduto()
             lifecycleScope.launch {
-                produtoDao.salva(produtoNovo)
-                finish()
+                usuario.value?.let { usuario ->
+                    val produtoNovo = criaProduto(usuario.id)
+                    produtoDao.salva(produtoNovo)
+                    finish()
+                }
             }
         }
     }
 
-    private fun criaProduto(): Produto {
+    private fun criaProduto(usuarioId: String): Produto {
         val campoNome = binding.activityFormularioProdutoNome
         val nome = campoNome.text.toString()
         val campoDescricao = binding.activityFormularioProdutoDescricao
@@ -95,7 +91,8 @@ class FormularioProdutoActivity : UsuarioBaseActivity() {
             nome = nome,
             descricao = descricao,
             valor = valor,
-            imagem = url
+            imagem = url,
+            usuarioId = usuarioId
         )
     }
 
