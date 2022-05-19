@@ -44,15 +44,15 @@ class ListaProdutosActivity : UsuarioBaseActivity() {
 
         lifecycleScope.launch {
             launch {
-                usuario.filterNotNull().collect {
-                    buscaProdutosDoUsuario()
+                usuario.filterNotNull().collect { usuario ->
+                    buscaProdutosDoUsuario(usuario.id)
                 }
             }
         }
     }
 
-    private suspend fun buscaProdutosDoUsuario() {
-        produtoDao.buscaTodos().collect { produtos ->
+    private suspend fun buscaProdutosDoUsuario(usuarioId: String) {
+        produtoDao.buscaTodosDoUsuario(usuarioId).collect { produtos ->
             adapter.atualiza(produtos)
         }
     }
