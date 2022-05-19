@@ -2,11 +2,13 @@ package br.com.alura.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import br.com.alura.orgs.R
 import br.com.alura.orgs.database.AppDatabase
@@ -15,12 +17,15 @@ import br.com.alura.orgs.database.preference.dataStore
 import br.com.alura.orgs.databinding.ActivityListaProdutosActivityBinding
 import br.com.alura.orgs.extensions.vaiPara
 import br.com.alura.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
+import br.com.alura.orgs.ui.viewmodel.LoginViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 
-class ListaProdutosActivity : AppCompatActivity() {
+class ListaProdutosActivity : UsuarioBaseActivity() {
 
     private val adapter = ListaProdutosAdapter(context = this)
     private val binding by lazy {
@@ -31,34 +36,15 @@ class ListaProdutosActivity : AppCompatActivity() {
         db.produtoDao()
     }
 
-    private val usuarioDao by lazy {
-        AppDatabase.instancia(this).usuarioDao()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         configuraRecyclerView()
         configuraFab()
+
         lifecycleScope.launch {
             launch {
-                verificaUsuarioLogado()
-            }
-        }
-    }
-
-    private suspend fun verificaUsuarioLogado() {
-        dataStore.data.collect { preferences ->
-            preferences[CHAVE_USUARIO_ID_LOGADO]?.let { usuarioId ->
-                buscaUsuario(usuarioId)
-            } ?: vaiParaLogin()
-        }
-    }
-
-    private fun buscaUsuario(usuarioId: String) {
-        lifecycleScope.launch {
-            usuarioDao.buscaPorId(usuarioId).firstOrNull()?.let {
-                launch {
+                usuario.filterNotNull().collect {
                     buscaProdutosDoUsuario()
                 }
             }
@@ -69,12 +55,6 @@ class ListaProdutosActivity : AppCompatActivity() {
         produtoDao.buscaTodos().collect { produtos ->
             adapter.atualiza(produtos)
         }
-    }
-
-
-    private fun vaiParaLogin() {
-        vaiPara(LoginActivity::class.java)
-        finish()
     }
 
     private fun configuraFab() {
@@ -117,12 +97,6 @@ class ListaProdutosActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private suspend fun deslogaUsuario() {
-        dataStore.edit { preferences ->
-            preferences.remove(CHAVE_USUARIO_ID_LOGADO)
-        }
     }
 
 

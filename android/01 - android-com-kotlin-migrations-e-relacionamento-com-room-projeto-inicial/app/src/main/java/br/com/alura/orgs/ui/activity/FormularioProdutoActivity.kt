@@ -1,6 +1,7 @@
 package br.com.alura.orgs.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import br.com.alura.orgs.database.AppDatabase
@@ -10,10 +11,11 @@ import br.com.alura.orgs.extensions.tentaCarregarImagem
 import br.com.alura.orgs.model.Produto
 import br.com.alura.orgs.ui.dialog.FormularioImagemDialog
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
-class FormularioProdutoActivity : AppCompatActivity() {
+class FormularioProdutoActivity : UsuarioBaseActivity() {
 
     private val binding by lazy {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
@@ -38,26 +40,17 @@ class FormularioProdutoActivity : AppCompatActivity() {
                 }
         }
         tentaCarregarProduto()
+        lifecycleScope.launch {
+            launch {
+                usuario.filterNotNull().collect {
+                    Log.i("Formulario Produto", "usuario: $it")
+                }
+            }
+        }
     }
 
     private fun tentaCarregarProduto() {
         produtoId = intent.getLongExtra(CHAVE_PRODUTO_ID, 0L)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        tentaBuscarProduto()
-    }
-
-    private fun tentaBuscarProduto() {
-        lifecycleScope.launch {
-            produtoDao.buscaPorId(produtoId).collect {
-                it?.let { produtoEncontrado ->
-                    title = "Alterar produto"
-                    preencheCampos(produtoEncontrado)
-                }
-            }
-        }
     }
 
     private fun preencheCampos(produto: Produto) {

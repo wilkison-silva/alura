@@ -13,12 +13,18 @@ import br.com.alura.orgs.databinding.ActivityLoginBinding
 import br.com.alura.orgs.extensions.toHash
 import br.com.alura.orgs.extensions.toast
 import br.com.alura.orgs.extensions.vaiPara
+import br.com.alura.orgs.ui.viewmodel.LoginViewModel
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
+    }
+
+    private val loginViewModel by lazy {
+        LoginViewModel()
     }
 
     private val usuarioDao by lazy {
@@ -47,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
                 usuarioNome = usuario,
                 usuarioSenha = senha
             )?.let { usuario ->
+                Log.i("Usuario Base", "Indo para Lista de Produtos")
                 vaiPara(ListaProdutosActivity::class.java)
                 dataStore.edit { preferences ->
                     preferences[CHAVE_USUARIO_ID_LOGADO] = usuario.id
