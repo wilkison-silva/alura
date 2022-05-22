@@ -14,6 +14,9 @@ interface NotaDao {
     @Insert(onConflict = REPLACE)
     suspend fun salva(note: Nota)
 
+    @Insert
+    suspend fun salva(note: List<Nota>)
+
     @Query("SELECT * FROM Nota")
     fun buscaTodas() : Flow<List<Nota>>
 
@@ -22,5 +25,6 @@ interface NotaDao {
 
     @Query("DELETE FROM Nota WHERE id = :id")
     suspend fun remove(id: Long)
+
 
 }
