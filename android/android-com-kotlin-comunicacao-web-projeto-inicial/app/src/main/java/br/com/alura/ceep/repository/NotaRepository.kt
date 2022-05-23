@@ -34,6 +34,9 @@ class NotaRepository(
 
     suspend fun remove(notaId: String) {
         notaDao.remove(notaId)
+        if(notaWebClient.remove(notaId)){
+            
+        }
     }
 
     fun buscaPorId(notaId: String): Flow<Nota> {

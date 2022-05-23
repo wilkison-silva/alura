@@ -49,4 +49,18 @@ class NotaWebClient {
         return false
     }
 
+    suspend fun remove(notaId: String): Boolean {
+        try {
+            val resposta = notaService.remove(notaId)
+            if(resposta.isSuccessful){
+                return true
+            }
+            return false
+        }
+        catch (e: Exception){
+            Log.e("NotaWebCliente", "remove: Falha em remover na webAPI")
+            return false
+        }
+    }
+
 }
