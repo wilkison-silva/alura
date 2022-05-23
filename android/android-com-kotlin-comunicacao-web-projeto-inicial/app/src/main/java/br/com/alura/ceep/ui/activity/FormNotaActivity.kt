@@ -13,7 +13,9 @@ import br.com.alura.ceep.database.AppDatabase
 import br.com.alura.ceep.databinding.ActivityFormNotaBinding
 import br.com.alura.ceep.extensions.tentaCarregarImagem
 import br.com.alura.ceep.model.Nota
+import br.com.alura.ceep.repository.NotaRepository
 import br.com.alura.ceep.ui.dialog.FormImagemDialog
+import br.com.alura.ceep.webclient.NotaWebClient
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -23,9 +25,14 @@ class FormNotaActivity : AppCompatActivity() {
         ActivityFormNotaBinding.inflate(layoutInflater)
     }
     private var imagem: MutableStateFlow<String?> = MutableStateFlow(null)
-    private val dao by lazy {
-        AppDatabase.instancia(this).notaDao()
+
+    private val notaRepository by lazy {
+        NotaRepository(
+            AppDatabase.instancia(this).notaDao(),
+            NotaWebClient()
+        )
     }
+
     private var notaId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +67,7 @@ class FormNotaActivity : AppCompatActivity() {
 
     private suspend fun tentaBuscarNota() {
         notaId?.let { id: String ->
-            dao.buscaPorId(id)
+            notaRepository.buscaPorId(id)
                 .filterNotNull()
                 .collect { notaEncontrada ->
                     notaId = notaEncontrada.id
@@ -106,7 +113,7 @@ class FormNotaActivity : AppCompatActivity() {
     private fun remove() {
         lifecycleScope.launch {
             notaId?.let { id: String ->
-                dao.remove(id)
+                notaRepository.remove(id)
                 finish()
             }
         }
@@ -115,7 +122,7 @@ class FormNotaActivity : AppCompatActivity() {
     private fun salva() {
         val nota = criaNota()
         lifecycleScope.launch {
-            dao.salva(nota)
+            notaRepository.salva(nota)
             finish()
         }
     }

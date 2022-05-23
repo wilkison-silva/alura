@@ -2,7 +2,6 @@ package br.com.alura.ceep.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
@@ -15,14 +14,8 @@ import br.com.alura.ceep.extensions.vaiPara
 import br.com.alura.ceep.model.Nota
 import br.com.alura.ceep.repository.NotaRepository
 import br.com.alura.ceep.ui.recyclerview.adapter.ListaNotasAdapter
-import br.com.alura.ceep.webclient.RetrofitInicializador
-import br.com.alura.ceep.webclient.model.NotaResposta
-import br.com.alura.ceep.webclient.service.NotaWebClient
-import kotlinx.coroutines.Dispatchers.IO
+import br.com.alura.ceep.webclient.NotaWebClient
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ListaNotasActivity : AppCompatActivity() {
 
@@ -47,7 +40,7 @@ class ListaNotasActivity : AppCompatActivity() {
         configuraRecyclerView()
         lifecycleScope.launch {
             launch {
-                atualizaTodas()
+                sincroniza()
             }
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 buscaNotas()
@@ -55,8 +48,8 @@ class ListaNotasActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun atualizaTodas() {
-        notaRepository.atualizaTodas()
+    private suspend fun sincroniza() {
+        notaRepository.sincroniza()
     }
 
     private fun configuraFab() {

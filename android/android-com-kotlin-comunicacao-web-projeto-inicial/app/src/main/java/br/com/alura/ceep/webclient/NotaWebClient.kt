@@ -1,10 +1,12 @@
-package br.com.alura.ceep.webclient.service
+package br.com.alura.ceep.webclient
 
 import android.util.Log
 import br.com.alura.ceep.model.Nota
-import br.com.alura.ceep.webclient.RetrofitInicializador
+import br.com.alura.ceep.webclient.model.NotaRequisicao
 import br.com.alura.ceep.webclient.model.NotaResposta
+import retrofit2.Response
 import java.lang.Exception
+import javax.security.auth.login.LoginException
 
 class NotaWebClient {
 
@@ -22,6 +24,29 @@ class NotaWebClient {
             Log.e("NotaWebCliente", "Exception: ", e)
             null
         }
+    }
+
+    suspend fun salva(nota: Nota): Boolean {
+        try {
+            val resposta: Response<NotaResposta> = notaService.salva(
+                nota.id,
+                NotaRequisicao(
+                    nota.titulo,
+                    nota.descricao,
+                    nota.imagem
+                )
+            )
+            if (resposta.isSuccessful) {
+                Log.i("NotaWebCliente", "Nota salva na webApi")
+                return true
+            } else {
+                Log.i("NotaWebCliente", "Não conseguiu salvar a API: ${resposta.code()} - code")
+                return false
+            }
+        } catch (e: Exception) {
+            Log.e("NotaWebCliente", "Falha ao salvar", e)
+        }
+        return false
     }
 
 }

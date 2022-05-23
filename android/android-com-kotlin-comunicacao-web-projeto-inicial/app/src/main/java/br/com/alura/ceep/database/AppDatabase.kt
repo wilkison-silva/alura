@@ -6,10 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import br.com.alura.ceep.database.dao.NotaDao
 import br.com.alura.ceep.database.migration.MIGRATION_1_2
+import br.com.alura.ceep.database.migration.MIGRATION_2_3
 import br.com.alura.ceep.model.Nota
 
 @Database(
-    version = 2,
+    version = 3,
     entities = [Nota::class],
     exportSchema = true
 )
@@ -27,7 +28,7 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java,
                 "ceep.db"
             )
-                .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                 .build()
         }
     }
