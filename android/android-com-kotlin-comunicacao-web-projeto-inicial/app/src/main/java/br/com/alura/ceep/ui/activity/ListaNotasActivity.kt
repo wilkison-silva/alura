@@ -15,6 +15,7 @@ import br.com.alura.ceep.model.Nota
 import br.com.alura.ceep.repository.NotaRepository
 import br.com.alura.ceep.ui.recyclerview.adapter.ListaNotasAdapter
 import br.com.alura.ceep.webclient.NotaWebClient
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class ListaNotasActivity : AppCompatActivity() {

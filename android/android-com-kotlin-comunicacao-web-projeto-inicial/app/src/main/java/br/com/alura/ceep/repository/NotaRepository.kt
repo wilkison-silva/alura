@@ -1,5 +1,6 @@
 package br.com.alura.ceep.repository
 
+import android.util.Log
 import br.com.alura.ceep.database.dao.NotaDao
 import br.com.alura.ceep.model.Nota
 import br.com.alura.ceep.webclient.NotaWebClient
@@ -33,9 +34,9 @@ class NotaRepository(
     }
 
     suspend fun remove(notaId: String) {
-        notaDao.remove(notaId)
+        notaDao.desativa(notaId)
         if(notaWebClient.remove(notaId)){
-            
+            notaDao.remove(notaId)
         }
     }
 
@@ -44,6 +45,14 @@ class NotaRepository(
     }
 
     suspend fun sincroniza(){
+
+        val notasDesativadas = notaDao.buscaDesativadas().first()
+        notasDesativadas.forEach { notaDesativada ->
+            Log.i("NotaRepository", "sincroniza() - $notaDesativada")
+            remove(notaDesativada.id)
+        }
+
+
         //tenta atualizar as notas não sincronizadas do banco para dentro da webAPI
         val notasNaoSincronizadas: List<Nota> = notaDao.buscaNotasNaoSincronizadas().first()
         notasNaoSincronizadas.forEach{ notaNaoSincronizada: Nota ->
