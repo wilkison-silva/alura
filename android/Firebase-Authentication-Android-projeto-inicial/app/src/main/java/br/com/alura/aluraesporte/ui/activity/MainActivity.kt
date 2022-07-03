@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.ui.viewmodel.EstadoAppViewModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.main_activity.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -22,6 +23,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+
+        val firebaseAuth = FirebaseAuth.getInstance()
+        firebaseAuth.createUserWithEmailAndPassword("will@gmail.com", "teste1234")
+
         controlador.addOnDestinationChangedListener { _,
                                                       destination,
                                                       _ ->
