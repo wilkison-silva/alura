@@ -46,7 +46,7 @@ class CadastroUsuarioFragment : Fragment() {
                     if (result) {
                         controlador.popBackStack()
                     } else {
-                        Snackbar.make(view, "Algo deu errado", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, "Algo deu errado", Snackbar.LENGTH_LONG).show()
                     }
                 }
         }
