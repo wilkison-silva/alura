@@ -1,10 +1,7 @@
 package br.com.alura.aluraesporte
 
 import android.app.Application
-import br.com.alura.aluraesporte.di.daoModule
-import br.com.alura.aluraesporte.di.testeDatabaseModule
-import br.com.alura.aluraesporte.di.uiModule
-import br.com.alura.aluraesporte.di.viewModelModule
+import br.com.alura.aluraesporte.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -15,6 +12,7 @@ class AppApplication : Application() {
             androidContext(this@AppApplication)
             modules(
                 listOf(
+                    firebaseAuthModule,
                     testeDatabaseModule,
                     daoModule,
                     uiModule,

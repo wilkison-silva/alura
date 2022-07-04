@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.alura.aluraesporte.R
+import br.com.alura.aluraesporte.ui.viewmodel.CadastroUsuarioViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.ComponentesVisuais
 import br.com.alura.aluraesporte.ui.viewmodel.EstadoAppViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.cadastro_usuario.*
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class CadastroUsuarioFragment : Fragment() {
@@ -18,7 +21,7 @@ class CadastroUsuarioFragment : Fragment() {
         findNavController()
     }
     private val estadoAppViewModel: EstadoAppViewModel by sharedViewModel()
-
+    private val cadastroUsuarioViewModel: CadastroUsuarioViewModel by inject()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,7 +38,17 @@ class CadastroUsuarioFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         estadoAppViewModel.temComponentes = ComponentesVisuais()
         cadastro_usuario_botao_cadastrar.setOnClickListener {
-            controlador.popBackStack()
+            val email = cadastro_usuario_email.editText?.text.toString()
+            val password = cadastro_usuario_senha.editText?.text.toString()
+            cadastroUsuarioViewModel
+                .createUser(email, password)
+                .observe(viewLifecycleOwner) { result ->
+                    if (result) {
+                        controlador.popBackStack()
+                    } else {
+                        Snackbar.make(view, "Algo deu errado", Snackbar.LENGTH_LONG)
+                    }
+                }
         }
     }
 
