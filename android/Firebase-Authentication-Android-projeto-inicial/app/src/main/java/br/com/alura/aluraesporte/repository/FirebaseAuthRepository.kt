@@ -1,10 +1,10 @@
 package br.com.alura.aluraesporte.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.ktx.Firebase
 
 class FirebaseAuthRepository(
     private val firebaseAuth: FirebaseAuth
@@ -17,6 +17,9 @@ class FirebaseAuthRepository(
                 mutableLiveData.postValue(true)
             }
             .addOnFailureListener { e: Exception ->
+                when(e){
+
+                }
                 e.printStackTrace()
                 mutableLiveData.postValue(false)
             }
@@ -39,7 +42,7 @@ class FirebaseAuthRepository(
         return mutableLiveData
     }
 
-    fun getCurrentUser(email: String, password: String): FirebaseUser? {
+    fun getCurrentUser(): FirebaseUser? {
         return firebaseAuth.currentUser
     }
 
