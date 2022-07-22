@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import br.com.alura.aluraesporte.model.Usuario
 import com.google.firebase.auth.*
-import kotlinx.coroutines.tasks.await
 
 private const val TAG = "FirebaseAuthRepository"
 
@@ -18,9 +17,8 @@ class FirebaseAuthRepository(private val firebaseAuth: FirebaseAuth) {
     fun cadastra(usuario: Usuario): LiveData<Resource<Boolean>> {
         val liveData = MutableLiveData<Resource<Boolean>>()
         try {
-            val tarefa = firebaseAuth
-                .createUserWithEmailAndPassword(usuario.email, usuario.senha)
-
+            val tarefa =
+                firebaseAuth.createUserWithEmailAndPassword(usuario.email, usuario.senha)
             tarefa.addOnSuccessListener {
                 Log.i(TAG, "cadastra: cadastro sucedido")
                 liveData.value = Resource(true)
@@ -78,8 +76,8 @@ class FirebaseAuthRepository(private val firebaseAuth: FirebaseAuth) {
 
     fun usuario(): LiveData<Usuario> {
         val liveData = MutableLiveData<Usuario>()
-        firebaseAuth.currentUser?.let { firebaseUser ->
-            firebaseUser.email?.let { email ->
+        firebaseAuth.currentUser?.let {firebaseUser ->
+            firebaseUser.email?.let {email ->
                 liveData.value = Usuario(email)
             }
         }

@@ -55,18 +55,27 @@ class ListaProdutosFragment : BaseFragment() {
             appBar = true,
             bottomNavigation = true)
         configuraRecyclerView()
+        configuraFabAdiciona()
+    }
+
+    private fun configuraFabAdiciona() {
+        lista_produtos_fab.setOnClickListener {
+            val direcao = ListaProdutosFragmentDirections
+                .acaoListaProdutosParaFormularioProduto()
+            controlador.navigate(direcao)
+        }
     }
 
     private fun configuraRecyclerView() {
         val divisor = DividerItemDecoration(context, VERTICAL)
         lista_produtos_recyclerview.addItemDecoration(divisor)
         adapter.onItemClickListener = { produtoSelecionado ->
-            vaiParaDetalhesDoProduto(produtoSelecionado.id)
+            produtoSelecionado.id?.let { vaiParaDetalhesDoProduto(it) }
         }
         lista_produtos_recyclerview.adapter = adapter
     }
 
-    private fun vaiParaDetalhesDoProduto(produtoId: Long) {
+    private fun vaiParaDetalhesDoProduto(produtoId: String) {
         val direcao = ListaProdutosFragmentDirections
             .acaoListaProdutosParaDetalhesProduto(produtoId)
         controlador.navigate(direcao)

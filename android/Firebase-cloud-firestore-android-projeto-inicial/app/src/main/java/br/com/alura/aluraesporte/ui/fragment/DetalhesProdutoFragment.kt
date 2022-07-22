@@ -3,6 +3,7 @@ package br.com.alura.aluraesporte.ui.fragment
 import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.Observer
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.R
@@ -37,25 +38,35 @@ class DetalhesProdutoFragment : BaseFragment() {
         )
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_detalhes_produto, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_detalhes_produto_altera -> vaiParaFormulario()
+            R.id.menu_detalhes_produto_remove -> remove()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun remove() {
+        viewModel.remove().observe(viewLifecycleOwner) {
+            controlador.popBackStack()
+        }
+    }
+
+    private fun vaiParaFormulario() {
+        DetalhesProdutoFragmentDirections
+            .acaoDetalhesProdutoParaFormularioProduto(produtoId)
+            .let(controlador::navigate)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         estadoAppViewModel.temComponentes = ComponentesVisuais(appBar = true)
         buscaProduto()
-        configuraBotaoComprar()
-    }
-
-    private fun configuraBotaoComprar() {
-        detalhes_produto_botao_comprar.setOnClickListener {
-            viewModel.produtoEncontrado.value?.let {
-                vaiParaPagamento()
-            }
-        }
-    }
-
-    private fun vaiParaPagamento() {
-        val direcao = DetalhesProdutoFragmentDirections
-            .acaoDetalhesProdutoParaPagamento(produtoId)
-        controlador.navigate(direcao)
     }
 
     private fun buscaProduto() {
