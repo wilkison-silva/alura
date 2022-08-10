@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.alura.alurasquare.R
 import br.com.alura.alurasquare.databinding.FormularioPostBinding
+import br.com.alura.alurasquare.databinding.OpcoesImagemPostBinding
 import br.com.alura.alurasquare.extensions.snackbar
 import br.com.alura.alurasquare.model.Post
 import br.com.alura.alurasquare.repository.Resultado
@@ -21,6 +22,7 @@ import br.com.alura.alurasquare.ui.viewmodel.Componentes
 import br.com.alura.alurasquare.ui.viewmodel.EstadoAppViewModel
 import br.com.alura.alurasquare.ui.viewmodel.FormularioPostViewModel
 import coil.load
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
@@ -71,9 +73,21 @@ class FormularioPostFragment : Fragment() {
         )
         tentaCarregarPost()
         binding.formularioPostImagem.setOnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "image/"
-            startActivityForResult(intent, REQUEST_IMAGE_GET)
+
+            val bottomSheetDialog = BottomSheetDialog(requireContext())
+            val bindingBottomSheeetDialog = OpcoesImagemPostBinding.inflate(layoutInflater)
+            bindingBottomSheeetDialog.opcoesImagemPostGaleria.setOnClickListener{
+                val intent = Intent(Intent.ACTION_GET_CONTENT)
+                intent.type = "image/"
+                startActivityForResult(intent, REQUEST_IMAGE_GET)
+                bottomSheetDialog.dismiss()
+            }
+            bindingBottomSheeetDialog.opcoesImagemPostRemover.setOnClickListener {
+                bottomSheetDialog.dismiss()
+            }
+            bottomSheetDialog.setContentView(bindingBottomSheeetDialog.root)
+            bottomSheetDialog.show()
+
         }
     }
 
