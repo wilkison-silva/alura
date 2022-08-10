@@ -2,10 +2,13 @@ package br.com.alura.alurasquare.ui.recyclerview.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.alurasquare.databinding.ItemPostBinding
 import br.com.alura.alurasquare.model.Post
+import coil.load
 
 class ListaPostsAdapter(
     private val context: Context,
@@ -59,6 +62,11 @@ class ListaPostsAdapter(
             binding.itemPostLocal.text = post.local
             binding.itemPostMensagem.text = post.mensagem
             binding.itemPostAvaliacao.rating = post.avaliacao
+            val visibilidade = post.imagem?.let {
+                VISIBLE
+            } ?: GONE
+            binding.itemPostImagem.visibility = visibilidade
+            binding.itemPostImagem.load(post.imagem)
         }
 
     }
