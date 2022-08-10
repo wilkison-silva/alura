@@ -1,7 +1,10 @@
 package br.com.alura.alurasquare.ui.fragment
 
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.core.graphics.drawable.toBitmap
@@ -26,6 +29,9 @@ import kotlinx.coroutines.tasks.await
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.io.ByteArrayOutputStream
+
+
+private const val REQUEST_IMAGE_GET = 1
 
 class FormularioPostFragment : Fragment() {
 
@@ -63,8 +69,20 @@ class FormularioPostFragment : Fragment() {
                 appBar = true
             )
         )
-        binding.formularioPostImagem.load("https://www.consultoriarr.com.br/wp-content/uploads/2020/01/img-empreender-em-sao-paulo-o-que-voce-precisa-saber-sobre-o-assunto.jpg")
         tentaCarregarPost()
+        binding.formularioPostImagem.setOnClickListener {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/"
+            startActivityForResult(intent, REQUEST_IMAGE_GET)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
+            intent?.data?.let { uriImagem: Uri ->
+                binding.formularioPostImagem.load(uriImagem)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -106,7 +124,10 @@ class FormularioPostFragment : Fragment() {
     }
 
     private fun edita(post: Post) {
-        viewModel.edita(post).observe(viewLifecycleOwner) {
+
+        val imagemByteArray = devolveByteArrayDeImagem()
+
+        viewModel.edita(post, imagemByteArray).observe(viewLifecycleOwner) {
             it?.let { resultado ->
                 when (resultado) {
                     is Resultado.Sucesso -> controlador.popBackStack()
@@ -119,11 +140,7 @@ class FormularioPostFragment : Fragment() {
 
     private fun salva(post: Post) {
 
-        val imageView = binding.formularioPostImagem
-        val bitmap = imageView.drawable.toBitmap()
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val imagemByteArray = baos.toByteArray()
+        val imagemByteArray = devolveByteArrayDeImagem()
 
         viewModel.salva(post, imagemByteArray).observe(viewLifecycleOwner) { resultado ->
             when (resultado) {
@@ -132,6 +149,15 @@ class FormularioPostFragment : Fragment() {
                     .snackbar(mensagem = "Post não foi enviada")
             }
         }
+    }
+
+    private fun devolveByteArrayDeImagem(): ByteArray {
+        val imageView = binding.formularioPostImagem
+        val bitmap = imageView.drawable.toBitmap()
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val imagemByteArray = baos.toByteArray()
+        return imagemByteArray
     }
 
     private fun tentaCarregarPost() {
@@ -147,6 +173,9 @@ class FormularioPostFragment : Fragment() {
         binding.formularioPostLocal.setText(post.local)
         binding.formularioPostMensagem.setText(post.mensagem)
         binding.formularioPostAvaliacao.rating = post.avaliacao
+        post.imagem?.let { imagem ->
+            binding.formularioPostImagem.load(imagem)
+        }
     }
 
     private fun apresentaDialogoDeRemocao() {
