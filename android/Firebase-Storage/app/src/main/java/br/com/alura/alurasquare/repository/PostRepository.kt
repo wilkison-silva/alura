@@ -82,6 +82,14 @@ class PostRepository(
             .delete().await()
     }
 
+    suspend fun removeImagem(postId: String){
+        GlobalScope.launch {
+            val storage: FirebaseStorage = Firebase.storage
+            val referencia = storage.reference.child("posts/$postId.jpg")
+            referencia.delete().await()
+        }
+    }
+
     private fun DocumentSnapshot.paraPost(): Post? {
         return this.toObject(DocumentoPost::class.java)?.paraPost(this.id)
     }
