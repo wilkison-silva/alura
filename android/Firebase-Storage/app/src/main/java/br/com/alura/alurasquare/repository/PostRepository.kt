@@ -7,8 +7,10 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 private const val NOME_COLECACAO = "posts"
@@ -24,16 +26,22 @@ class PostRepository(
     }
 
     suspend fun enviaImagem(postId: String, imagemByteArray: ByteArray) {
-        val storage: FirebaseStorage = Firebase.storage
-        val referencia = storage.reference.child("posts/$postId.jpg")
+        GlobalScope.launch {
+            firestore
+                .collection(NOME_COLECACAO)
+                .document(postId)
+                .update(mapOf("temImagem" to true))
 
-        referencia.putBytes(imagemByteArray).await()
-        val url = referencia.downloadUrl.await()
-        firestore
-            .collection(NOME_COLECACAO)
-            .document(postId)
-            .update(mapOf("imagem" to url.toString()))
+            val storage: FirebaseStorage = Firebase.storage
+            val referencia = storage.reference.child("posts/$postId.jpg")
 
+            referencia.putBytes(imagemByteArray).await()
+            val url = referencia.downloadUrl.await()
+            firestore
+                .collection(NOME_COLECACAO)
+                .document(postId)
+                .update(mapOf("imagem" to url.toString()))
+        }
     }
 
     suspend fun edita(post: Post) {
@@ -84,14 +92,16 @@ private class DocumentoPost(
     val local: String = "",
     val mensagem: String = "",
     val avaliacao: Float = 0.0f,
-    val imagem: String? = null
+    val imagem: String? = null,
+    val temImagem: Boolean = false
 ) {
 
     constructor(post: Post) : this(
         local = post.local,
         mensagem = post.mensagem,
         avaliacao = post.avaliacao,
-        imagem = post.imagem
+        imagem = post.imagem,
+        temImagem = post.temImagem
     )
 
     fun paraPost(id: String? = null) = Post(
@@ -99,7 +109,8 @@ private class DocumentoPost(
         local = local,
         mensagem = mensagem,
         avaliacao = avaliacao,
-        imagem = imagem
+        imagem = imagem,
+        temImagem = temImagem
     )
 
 }

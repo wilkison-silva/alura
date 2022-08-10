@@ -18,8 +18,8 @@ class FormularioPostViewModel(
         liveData<Resultado<Unit>>(viewModelScope.coroutineContext) {
             try {
                 val id = repository.salva(post)
-                repository.enviaImagem(id, imagemByteArray)
                 emit(Resultado.Sucesso())
+                repository.enviaImagem(id, imagemByteArray)
             } catch (e: Exception) {
                 emit(Resultado.Erro(e))
             }
