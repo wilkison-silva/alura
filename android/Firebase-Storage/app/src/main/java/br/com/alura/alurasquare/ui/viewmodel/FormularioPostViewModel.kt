@@ -1,9 +1,6 @@
 package br.com.alura.alurasquare.ui.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import br.com.alura.alurasquare.model.Post
 import br.com.alura.alurasquare.repository.PostRepository
 import br.com.alura.alurasquare.repository.Resultado
@@ -19,7 +16,9 @@ class FormularioPostViewModel(
             try {
                 val id = repository.salva(post)
                 emit(Resultado.Sucesso())
-                repository.enviaImagem(id, imagemByteArray)
+                _imagemCarregada.value?.let {
+                    repository.enviaImagem(id, imagemByteArray)
+                }
             } catch (e: Exception) {
                 emit(Resultado.Erro(e))
             }
@@ -41,11 +40,27 @@ class FormularioPostViewModel(
                 repository.edita(post)
                 emit(Resultado.Sucesso())
                 post.id?.let { postId ->
-                    repository.enviaImagem(postId, imagemByteArray)
+                    _imagemCarregada.value?.let {
+                        repository.enviaImagem(postId, imagemByteArray)
+                    }
                 }
             } catch (e: Exception) {
                 emit(Resultado.Erro(e))
             }
         }
+
+    private val _imagemCarregada = MutableLiveData<String?>()
+    val imagemCarregada: LiveData<String?>
+        get() = _imagemCarregada
+
+
+    fun atualizaImagemCarregada(imagemUrl: String){
+        _imagemCarregada.postValue(imagemUrl)
+    }
+
+    fun removerImagem(){
+        _imagemCarregada.postValue(null)
+    }
+
 
 }

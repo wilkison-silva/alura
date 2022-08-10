@@ -72,6 +72,11 @@ class FormularioPostFragment : Fragment() {
             )
         )
         tentaCarregarPost()
+        viewModel.imagemCarregada.observe(viewLifecycleOwner){
+            it?.let { imagemUrl ->
+                binding.formularioPostImagem.load(imagemUrl)
+            } ?: binding.formularioPostImagem.load(R.drawable.imagem_insercao_padrao)
+        }
         binding.formularioPostImagem.setOnClickListener {
 
             val bottomSheetDialog = BottomSheetDialog(requireContext())
@@ -83,6 +88,7 @@ class FormularioPostFragment : Fragment() {
                 bottomSheetDialog.dismiss()
             }
             bindingBottomSheeetDialog.opcoesImagemPostRemover.setOnClickListener {
+                viewModel.removerImagem()
                 bottomSheetDialog.dismiss()
             }
             bottomSheetDialog.setContentView(bindingBottomSheeetDialog.root)
@@ -94,7 +100,7 @@ class FormularioPostFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         if (requestCode == REQUEST_IMAGE_GET && resultCode == RESULT_OK) {
             intent?.data?.let { uriImagem: Uri ->
-                binding.formularioPostImagem.load(uriImagem)
+                viewModel.atualizaImagemCarregada(uriImagem.toString())
             }
         }
     }
@@ -188,7 +194,7 @@ class FormularioPostFragment : Fragment() {
         binding.formularioPostMensagem.setText(post.mensagem)
         binding.formularioPostAvaliacao.rating = post.avaliacao
         post.imagem?.let { imagem ->
-            binding.formularioPostImagem.load(imagem)
+            viewModel.atualizaImagemCarregada(imagem)
         }
     }
 
